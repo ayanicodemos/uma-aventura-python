@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uma Aventura Python 🏪✨ — Por Aya Nicodemos</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            fantasy: ['Cinzel', 'serif'],
+          },
+          colors: {
+            rpg: {
+              bg: '#0f141c',
+              card: '#18202c',
+              border: '#2a3649',
+              gold: '#f59e0b',
+              goldLight: '#fbbf24',
+              emerald: '#10b981',
+              ruby: '#ef4444',
+              sapphire: '#3b82f6',
+              wood: '#382218'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    /* 3D Flip Card Effect */
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f141c; }
+    ::-webkit-scrollbar-thumb { background: #2a3649; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+  </style>
+</head>
+<body class="bg-rpg-bg text-slate-200 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-900">
+
+  <!-- TOP HEADER / STATUS BAR -->
+  <header class="sticky top-0 z-40 bg-rpg-card/95 backdrop-blur-md border-b border-rpg-border px-4 lg:px-8 py-3 transition-all">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- Brand & Story Lore -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
+          🏪
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-fantasy font-bold text-lg lg:text-xl tracking-wide text-amber-400">Uma Aventura Python</h1>
+            <span class="text-xs bg-amber-500/10 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-mono">Protótipo v1.0</span>
+          </div>
+          <p class="text-xs text-slate-400">Por <span class="text-slate-300 font-medium">Aya Nicodemos</span> • Ayasoft Studios</p>
+        </div>
+      </div>
+
+      <!-- Gamification Bar (XP, Gold, Badges) -->
+      <div class="flex items-center gap-4">
+        <!-- Gold / XP Counter -->
+        <div class="flex items-center gap-2 bg-slate-900/80 border border-amber-500/30 px-3.5 py-1.5 rounded-xl shadow-inner">
+          <span class="text-lg">🪙</span>
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-amber-400/80 font-bold leading-none">Moedas de Ouro</div>
+            <div id="goldCount" class="font-mono font-bold text-amber-300 text-sm leading-tight">50</div>
+          </div>
+        </div>
+
+        <!-- Level Badge -->
+        <div class="hidden sm:flex items-center gap-2 bg-slate-900/80 border border-blue-500/30 px-3.5 py-1.5 rounded-xl shadow-inner">
+          <span class="text-lg">📜</span>
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-blue-400/80 font-bold leading-none">Patente da Loja</div>
+            <div id="rankTitle" class="font-sans font-semibold text-blue-300 text-sm leading-tight">Aprendiz de Balcão</div>
+          </div>
+        </div>
+
+        <!-- GitHub Repo Button -->
+        <a href="https://github.com/ayanicodemos/uma-aventura-python" target="_blank" rel="noreferrer" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition" title="Ver código no GitHub">
+          <i data-lucide="github" class="w-5 h-5"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col lg:flex-row gap-6 p-4 lg:p-8">
+
+    <!-- SIDEBAR: MAPA DA JORNADA -->
+    <aside class="w-full lg:w-72 shrink-0 flex flex-col gap-4">
+      <div class="bg-rpg-card border border-rpg-border rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center justify-between pb-3 border-b border-rpg-border mb-3">
+          <span class="font-fantasy text-xs uppercase tracking-wider text-amber-400 font-bold flex items-center gap-2">
+            <i data-lucide="map" class="w-4 h-4"></i> Mapa de Módulos
+          </span>
+          <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">1 / 10 Abertos</span>
+        </div>
+
+        <nav class="space-y-1.5 text-sm">
+          <!-- Active Chapter -->
+          <button class="w-full text-left px-3 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/40 text-amber-300 font-medium flex items-center justify-between group transition">
+            <span class="flex items-center gap-2.5">
+              <span class="text-base">🧙‍♂️</span>
+              <span>1. O Primeiro Dia no Balcão</span>
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-amber-400"></i>
+          </button>
+
+          <!-- Locked Chapters -->
+          <div class="opacity-50 space-y-1.5 cursor-not-allowed select-none">
+            <div class="px-3 py-2 rounded-xl border border-transparent text-slate-400 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2.5">
+                <span>🚪</span>
+                <span>2. Abrindo as Portas com Python</span>
+              </span>
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </div>
+
+            <div class="px-3 py-2 rounded-xl border border-transparent text-slate-400 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2.5">
+                <span>💰</span>
+                <span>3. O Caixa da Loja (Variáveis)</span>
+              </span>
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </div>
+
+            <div class="px-3 py-2 rounded-xl border border-transparent text-slate-400 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2.5">
+                <span>⚖️</span>
+                <span>4. As Regras do Balcão (If / Else)</span>
+              </span>
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </div>
+
+            <div class="px-3 py-2 rounded-xl border border-transparent text-slate-400 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2.5">
+                <span>📦</span>
+                <span>5. Fila e Contagem (While / For)</span>
+              </span>
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </div>
+
+            <div class="px-3 py-2 rounded-xl border border-transparent text-slate-400 flex items-center justify-between text-xs">
+              <span class="flex items-center gap-2.5">
+                <span>📖</span>
+                <span>6. Livro de Inventário (Listas/Dicts)</span>
+              </span>
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Quick Tips from Aya -->
+      <div class="bg-gradient-to-br from-purple-950/40 to-slate-900 border border-purple-500/30 rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center gap-2 text-purple-300 font-bold text-xs uppercase tracking-wider mb-2">
+          <span>💡</span> Dica de Ouro da Aya
+        </div>
+        <p class="text-xs text-purple-200/90 leading-relaxed">
+          "Computadores não têm intuição mágica: se você esquecer de dizer ao seu Golem onde guardar a poção, ele simplesmente vai soltar ela no chão. Seja sempre claro e direto com ele!"
+        </p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col gap-6">
+
+      <!-- CHAPTER HERO / INTRO -->
+      <article class="bg-rpg-card border border-rpg-border rounded-3xl p-6 lg:p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold mb-2">
+          <span>Módulo 01</span> • <span>Fundamentos de Lógica</span>
+        </div>
+
+        <h2 class="text-2xl lg:text-3xl font-fantasy font-bold text-white tracking-wide mb-4">
+          O Primeiro Dia no Balcão: Como o Golem Pensa?
+        </h2>
+
+        <div class="prose prose-invert max-w-none text-slate-300 leading-relaxed space-y-4">
+          <p class="text-base lg:text-lg text-slate-200">
+            Olá, jovem comerciante! Seja muito bem-vindo ao balcão da sua mais nova loja de itens mágicos, poções e pergaminhos para aventureiros. 🥰
+          </p>
+          <p>
+            Vou ser muito sincera com você: gerenciar uma loja num reino de fantasia é uma loucura. A qualquer momento entra um bárbaro de 2 metros de altura exigindo uma <em>Poção de Fúria</em>, logo atrás vem uma maga impaciente pedindo um <em>Frasco de Mana</em>, e lá no fundo tem um ladino tentando pechinchar um desconto que você nunca aprovou.
+          </p>
+          <p>
+            Fazer todas as contas de cabeça, conferir estoques e calcular trocos sozinho faria seu cérebro derreter antes da hora do almoço. É exatamente por isso que você contratou um <strong>Golem Ajudante de Pedra e Engrenagens</strong>.
+          </p>
+
+          <!-- The Metaphor Box -->
+          <div class="bg-slate-900/90 border-l-4 border-amber-500 rounded-r-2xl p-4 my-6">
+            <h4 class="font-bold text-amber-300 flex items-center gap-2 text-sm uppercase tracking-wide">
+              <span>🤖</span> Quem é o seu Golem Ajudante?
+            </h4>
+            <p class="text-sm text-slate-300 mt-1">
+              O Golem é o <strong>Computador</strong> (e a linguagem <strong>Python</strong> é o idioma que você usa para dar ordens a ele). Ele possui duas características fundamentais:
+            </p>
+            <ul class="text-sm text-slate-300 list-disc list-inside mt-2 space-y-1">
+              <li><strong>Velocidade Inumana:</strong> Ele consegue calcular 1 milhão de preços e trocos em uma fração de segundo sem se cansar.</li>
+              <li><strong>Literalidade Absoluta (Zero Intuição):</strong> Ele não adivinha nada. Se você disser <em>"pegue a poção"</em> sem dizer <em>qual</em> poção, ele trava e te olha confuso.</li>
+            </ul>
+          </div>
+
+          <p>
+            A <strong>Lógica de Programação</strong> é simplesmente a arte de organizar seus pensamentos em uma sequência de passos tão clara e sem brechas que até um Golem de pedra consiga executar sem quebrar nenhuma garrafa no chão!
+          </p>
+        </div>
+      </article>
+
+      <!-- INTERACTIVE CHALLENGE ARENA -->
+      <section class="bg-rpg-card border border-rpg-border rounded-3xl p-6 lg:p-8 shadow-2xl space-y-8">
+        
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-rpg-border pb-4">
+          <div>
+            <h3 class="text-xl font-fantasy font-bold text-amber-400 flex items-center gap-2">
+              <span>⚔️</span> Arena de Desafios do Balcão
+            </h3>
+            <p class="text-xs text-slate-400">Pratique o que aprendeu, ganhe moedas de ouro e suba de nível!</p>
+          </div>
+          <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700 text-xs">
+            <span class="text-slate-400">Progresso da Lição:</span>
+            <span id="lessonProgress" class="font-mono font-bold text-amber-400">0 / 3 Desafios</span>
+          </div>
+        </div>
+
+        <!-- 1. FLASHCARDS SECTION -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-sm text-slate-200 flex items-center gap-2 uppercase tracking-wider">
+              <span>🃏</span> Desafio 1: Cartas de Fixação Rápida
+            </h4>
+            <span class="text-xs text-slate-400">Clique na carta para virar</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Card 1 -->
+            <div class="h-48 perspective-1000 cursor-pointer group" onclick="flipCard(this)">
+              <div class="relative w-full h-full duration-500 transform-style-3d rounded-2xl border border-amber-500/30 shadow-lg">
+                <!-- Front -->
+                <div class="absolute inset-0 bg-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden">
+                  <div class="flex justify-between items-center text-xs text-amber-400 font-bold">
+                    <span>CARTA #01</span>
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </div>
+                  <p class="text-sm font-medium text-center text-slate-200">
+                    O que é o Golem Ajudante na metáfora da nossa loja?
+                  </p>
+                  <span class="text-[11px] text-center text-slate-400">👉 Toque para revelar</span>
+                </div>
+                <!-- Back -->
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-950 to-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden rotate-y-180 border border-amber-500">
+                  <span class="text-xs text-amber-300 font-bold">RESPOSTA</span>
+                  <p class="text-xs text-slate-200 text-center leading-relaxed">
+                    É o <strong>Computador</strong>! Ele executa tudo super rápido, mas precisa de ordens literais e exatas.
+                  </p>
+                  <button onclick="event.stopPropagation(); rewardXP(10, this)" class="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-1.5 px-3 rounded-lg transition shadow">
+                    Entendi! (+10 🪙)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="h-48 perspective-1000 cursor-pointer group" onclick="flipCard(this)">
+              <div class="relative w-full h-full duration-500 transform-style-3d rounded-2xl border border-blue-500/30 shadow-lg">
+                <!-- Front -->
+                <div class="absolute inset-0 bg-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden">
+                  <div class="flex justify-between items-center text-xs text-blue-400 font-bold">
+                    <span>CARTA #02</span>
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </div>
+                  <p class="text-sm font-medium text-center text-slate-200">
+                    Por que computadores não funcionam com "adivinhação"?
+                  </p>
+                  <span class="text-[11px] text-center text-slate-400">👉 Toque para revelar</span>
+                </div>
+                <!-- Back -->
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-950 to-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden rotate-y-180 border border-blue-500">
+                  <span class="text-xs text-blue-300 font-bold">RESPOSTA</span>
+                  <p class="text-xs text-slate-200 text-center leading-relaxed">
+                    Porque eles seguem <strong>algoritmos literais</strong>. Se a ordem for ambígua, eles erram ou travam.
+                  </p>
+                  <button onclick="event.stopPropagation(); rewardXP(10, this)" class="text-xs bg-blue-500 hover:bg-blue-400 text-slate-950 font-bold py-1.5 px-3 rounded-lg transition shadow">
+                    Entendi! (+10 🪙)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="h-48 perspective-1000 cursor-pointer group" onclick="flipCard(this)">
+              <div class="relative w-full h-full duration-500 transform-style-3d rounded-2xl border border-emerald-500/30 shadow-lg">
+                <!-- Front -->
+                <div class="absolute inset-0 bg-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden">
+                  <div class="flex justify-between items-center text-xs text-emerald-400 font-bold">
+                    <span>CARTA #03</span>
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </div>
+                  <p class="text-sm font-medium text-center text-slate-200">
+                    O que é um "Algoritmo" no dia a dia da loja?
+                  </p>
+                  <span class="text-[11px] text-center text-slate-400">👉 Toque para revelar</span>
+                </div>
+                <!-- Back -->
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-950 to-slate-900 rounded-2xl p-4 flex flex-col justify-between backface-hidden rotate-y-180 border border-emerald-500">
+                  <span class="text-xs text-emerald-300 font-bold">RESPOSTA</span>
+                  <p class="text-xs text-slate-200 text-center leading-relaxed">
+                    É a <strong>receita de passos ordenados</strong> (ex: receber ouro ➔ calcular troco ➔ entregar poção).
+                  </p>
+                  <button onclick="event.stopPropagation(); rewardXP(10, this)" class="text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-1.5 px-3 rounded-lg transition shadow">
+                    Entendi! (+10 🪙)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. PARSON'S CODE PUZZLE SECTION -->
+        <div class="space-y-4 pt-4 border-t border-rpg-border">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h4 class="font-bold text-sm text-slate-200 flex items-center gap-2 uppercase tracking-wider">
+                <span>🧩</span> Desafio 2: Quebra-Cabeça do Caixa da Loja
+              </h4>
+              <p class="text-xs text-slate-400">
+                Um guerreiro comprou uma Poção por 15 moedas e pagou com 20 moedas. Ordene as linhas para fazer o cálculo correto!
+              </p>
+            </div>
+            <button onclick="resetPuzzle()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Embaralhar
+            </button>
+          </div>
+
+          <!-- Puzzle Blocks List -->
+          <div id="puzzleContainer" class="space-y-2 bg-slate-950/70 p-4 rounded-2xl border border-slate-800">
+            <!-- Dynamically Rendered -->
+          </div>
+
+          <div class="flex items-center justify-between gap-4">
+            <span id="puzzleFeedback" class="text-xs font-medium"></span>
+            <button onclick="checkPuzzle()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl transition shadow-lg shadow-amber-500/20 flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i> Conferir Feitiço
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. LIVE PYTHON TERMINAL RUNNER -->
+        <div class="space-y-4 pt-4 border-t border-rpg-border">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h4 class="font-bold text-sm text-slate-200 flex items-center gap-2 uppercase tracking-wider">
+                <span>💻</span> Desafio 3: Terminal do Mago (Python no Navegador)
+              </h4>
+              <p class="text-xs text-slate-400">
+                Escreva um comando <code class="text-amber-300 font-mono">print()</code> para dar as boas-vindas na porta da sua loja!
+              </p>
+            </div>
+            <!-- Download .py button -->
+            <button onclick="downloadCode()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl border border-slate-700 flex items-center gap-1.5 transition" title="Baixar script para rodar no seu PC">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Baixar Script (.py)
+            </button>
+          </div>
+
+          <!-- Code Editor Area -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Left: Editor -->
+            <div class="flex flex-col rounded-2xl overflow-hidden border border-slate-700 bg-slate-950">
+              <div class="bg-slate-900 px-4 py-2 flex items-center justify-between text-xs text-slate-400 font-mono border-b border-slate-800">
+                <span class="flex items-center gap-1.5 text-slate-300">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> loja_abertura.py
+                </span>
+                <span>Python 3</span>
+              </div>
+              <textarea id="pythonCode" class="w-full h-44 bg-slate-950 p-4 font-mono text-sm text-amber-200 focus:outline-none resize-none leading-relaxed selection:bg-amber-500 selection:text-slate-900" spellcheck="false"># Anuncie a abertura da sua loja para os heróis!
+print("Bem-vindo à Loja da Aya! Poções em promoção hoje!")</textarea>
+              <div class="p-3 bg-slate-900/50 border-t border-slate-800 flex justify-end">
+                <button onclick="runPythonCode()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-4 py-2 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+                  <i data-lucide="play" class="w-4 h-4"></i> Executar no Navegador
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Terminal Output -->
+            <div class="flex flex-col rounded-2xl overflow-hidden border border-slate-700 bg-slate-950">
+              <div class="bg-slate-900 px-4 py-2 flex items-center justify-between text-xs text-slate-400 font-mono border-b border-slate-800">
+                <span>>_ Terminal do Golem (Saída)</span>
+                <span id="execStatus" class="text-slate-500">Aguardando execução...</span>
+              </div>
+              <pre id="terminalOutput" class="w-full h-44 p-4 font-mono text-xs text-slate-300 overflow-y-auto whitespace-pre-wrap leading-relaxed select-text">Clique em 'Executar' para ver o Golem recitar sua mensagem...</pre>
+              <div id="evalBox" class="p-3 bg-slate-900/70 border-t border-slate-800 flex items-center justify-between text-xs">
+                <span id="gradeText" class="text-slate-400">Nota da Missão: <strong class="text-white">--</strong></span>
+                <button onclick="evaluateExercise()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 transition">
+                  <i data-lucide="award" class="w-4 h-4"></i> Avaliar Missão (+20 🪙)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-rpg-border py-6 px-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p>Desenvolvido com carinho por <strong class="text-slate-300">Aya Nicodemos</strong> • Ayasoft Studios</p>
+      <p class="font-mono text-[11px] text-slate-600">100% Gratuito & Livre • Hospedado no GitHub</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // App State in LocalStorage
+    let state = {
+      gold: parseInt(localStorage.getItem('aya_gold') || '50'),
+      completed: JSON.parse(localStorage.getItem('aya_completed') || '[]')
+    };
+
+    function updateUI() {
+      document.getElementById('goldCount').textContent = state.gold;
+      localStorage.setItem('aya_gold', state.gold);
+      localStorage.setItem('aya_completed', JSON.stringify(state.completed));
+
+      const totalChallenges = 3;
+      const count = state.completed.length;
+      document.getElementById('lessonProgress').textContent = `${count} / ${totalChallenges} Desafios`;
+
+      if (state.gold >= 100) {
+        document.getElementById('rankTitle').textContent = 'Alquimista Contábil';
+      }
+    }
+    updateUI();
+
+    function rewardXP(amount, element) {
+      state.gold += amount;
+      updateUI();
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+      if (element) {
+        element.disabled = true;
+        element.textContent = 'Coletado! ✨';
+        element.classList.replace('bg-amber-500', 'bg-slate-700');
+        element.classList.replace('bg-blue-500', 'bg-slate-700');
+        element.classList.replace('bg-emerald-500', 'bg-slate-700');
+        element.classList.add('text-slate-400', 'cursor-not-allowed');
+      }
+    }
+
+    // 1. FLASHCARD LOGIC
+    function flipCard(card) {
+      const inner = card.querySelector('.transform-style-3d');
+      inner.classList.toggle('rotate-y-180');
+    }
+
+    // 2. PARSON'S PUZZLE LOGIC
+    const puzzleCorrectOrder = [
+      'preco_pocao = 15',
+      'moedas_cliente = 20',
+      'troco = moedas_cliente - preco_pocao',
+      'print(f"O troco é {troco} moedas!")'
+    ];
+
+    let puzzleCurrentItems = [
+      'troco = moedas_cliente - preco_pocao',
+      'preco_pocao = 15',
+      'print(f"O troco é {troco} moedas!")',
+      'moedas_cliente = 20'
+    ];
+
+    function renderPuzzle() {
+      const container = document.getElementById('puzzleContainer');
+      container.innerHTML = '';
+      puzzleCurrentItems.forEach((text, index) => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500/50 transition cursor-pointer select-none';
+        item.innerHTML = `
+          <div class="flex items-center gap-3 font-mono text-xs text-amber-200">
+            <span class="text-slate-500 font-bold text-xs">${index + 1}.</span>
+            <code>${text}</code>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="movePuzzle(${index}, -1)" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white" title="Mover para cima" ${index === 0 ? 'disabled style="opacity:0.2"' : ''}>▲</button>
+            <button onclick="movePuzzle(${index}, 1)" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white" title="Mover para baixo" ${index === puzzleCurrentItems.length - 1 ? 'disabled style="opacity:0.2"' : ''}>▼</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function movePuzzle(index, direction) {
+      const target = index + direction;
+      if (target < 0 || target >= puzzleCurrentItems.length) return;
+      const temp = puzzleCurrentItems[index];
+      puzzleCurrentItems[index] = puzzleCurrentItems[target];
+      puzzleCurrentItems[target] = temp;
+      renderPuzzle();
+    }
+
+    function resetPuzzle() {
+      puzzleCurrentItems.sort(() => Math.random() - 0.5);
+      renderPuzzle();
+      document.getElementById('puzzleFeedback').textContent = '';
+    }
+
+    function checkPuzzle() {
+      const isCorrect = puzzleCurrentItems.every((val, idx) => val === puzzleCorrectOrder[idx]);
+      const feedback = document.getElementById('puzzleFeedback');
+      if (isCorrect) {
+        feedback.className = 'text-xs font-bold text-emerald-400 flex items-center gap-1';
+        feedback.innerHTML = '✨ Perfeito! O cálculo do caixa está na ordem exata!';
+        if (!state.completed.includes('puzzle')) {
+          state.completed.push('puzzle');
+          rewardXP(20);
+        }
+      } else {
+        feedback.className = 'text-xs font-bold text-ruby flex items-center gap-1';
+        feedback.innerHTML = '❌ Quase lá! Lembre-se: primeiro declaramos os valores, depois calculamos a conta, e só no fim exibimos!';
+      }
+    }
+    renderPuzzle();
+
+    // 3. CODE EXECUTION & EVALUATION
+    function runPythonCode() {
+      const code = document.getElementById('pythonCode').value;
+      const terminal = document.getElementById('terminalOutput');
+      const status = document.getElementById('execStatus');
+
+      status.textContent = 'Executando feitiço...';
+      status.className = 'text-amber-400 font-bold';
+
+      // Safe JS-level Python interpreter simulation for instant response (matches print statements)
+      setTimeout(() => {
+        try {
+          const lines = code.split('\n');
+          let output = [];
+          
+          for (let line of lines) {
+            line = line.trim();
+            if (line.startsWith('#') || line === '') continue;
+            
+            // Match print(...)
+            const printMatch = line.match(/^print\((.*)\)$/);
+            if (printMatch) {
+              let content = printMatch[1].trim();
+              if ((content.startsWith('"') && content.endsWith('"')) || (content.startsWith("'") && content.endsWith("'"))) {
+                output.push(content.slice(1, -1));
+              } else {
+                output.push(content);
+              }
+            }
+          }
+
+          terminal.textContent = output.length > 0 ? output.join('\n') : '>> (Nenhuma saída impressa. Use o comando print!)';
+          terminal.className = 'w-full h-44 p-4 font-mono text-xs text-emerald-400 overflow-y-auto whitespace-pre-wrap leading-relaxed select-text';
+          status.textContent = 'Sucesso (Código 0)';
+          status.className = 'text-emerald-400 font-bold';
+        } catch (err) {
+          terminal.textContent = 'Erro no feitiço: ' + err.message;
+          terminal.className = 'w-full h-44 p-4 font-mono text-xs text-red-400 overflow-y-auto whitespace-pre-wrap leading-relaxed select-text';
+          status.textContent = 'Erro de Execução';
+          status.className = 'text-red-400 font-bold';
+        }
+      }, 300);
+    }
+
+    function evaluateExercise() {
+      const terminal = document.getElementById('terminalOutput').textContent;
+      const gradeText = document.getElementById('gradeText');
+
+      if (terminal.toLowerCase().includes('loja') || terminal.toLowerCase().includes('poções') || terminal.toLowerCase().includes('promoção')) {
+        gradeText.innerHTML = 'Nota da Missão: <strong class="text-emerald-400 font-bold text-sm">10 / 10 (100% de Acerto! 🌟)</strong>';
+        if (!state.completed.includes('code')) {
+          state.completed.push('code');
+          rewardXP(20);
+        }
+      } else {
+        gradeText.innerHTML = 'Nota da Missão: <strong class="text-amber-400">7 / 10</strong> (Dica: inclua o nome da loja ou poções no seu print!)';
+      }
+    }
+
+    // 4. DOWNLOAD SCRIPT (.py)
+    function downloadCode() {
+      const code = document.getElementById('pythonCode').value;
+      const blob = new Blob([code], { type: 'text/x-python' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'abertura_da_loja.py';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
