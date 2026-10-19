@@ -24,6 +24,7 @@ A estrutura condicional funciona exatamente como se você estivesse fazendo uma 
 ```text
 SE (esta condição for verdadeira):
     Execute estas ordens aqui dentro!
+
 SENÃO:
     Execute este outro plano alternativo!
 ```
@@ -32,23 +33,31 @@ Vamos ver como isso se aplica no balcão da sua loja:
 
 > Um guerreiro entra e quer comprar uma **Espada de Aço** que custa **50 moedas de ouro**.
 
-Como o seu Golem ajudante deve agir?
+Veja como o seu Golem ajudante deve pensar, com bastante clareza e espaço entre os passos:
 
 ```text
-preco_espada = 50
-ouro_do_guerreiro = 60
+preco da espada = 50
 
-SE (ouro_do_guerreiro >= preco_espada):
-    troco = ouro_do_guerreiro - preco_espada
-    Dizer: "Parabéns pela compra! Seu troco é de " + troco + " moedas."
-    Entregar a Espada de Aço na mão do guerreiro.
+ouro do guerreiro = 60
+
+
+SE (ouro do guerreiro >= preco da espada):
+
+    troco = ouro do guerreiro - preco da espada
+    
+    DIZER: "Parabéns pela compra! Seu troco é de " + troco + " moedas."
+    
+    ENTREGAR: Espada de Aço
+
+
 SENÃO:
-    Dizer: "Sinto muito, meu amigo! Você precisa de 50 moedas para levar esta espada. Volte ao calabouço para juntar mais ouro!"
+
+    DIZER: "Sinto muito! Você precisa de 50 moedas para levar esta espada. Volte ao calabouço para juntar mais ouro!"
 ```
 
 Veja que incrível:
-* Se o guerreiro tiver `60 moedas`, a condição `60 >= 50` é **Verdadeira (`True`)**. O Golem executa o primeiro bloco: calcula o troco, entrega a espada e comemora a venda!
-* Se o guerreiro tiver apenas `30 moedas`, a condição `30 >= 50` é **Falsa (`False`)**. O Golem pula o primeiro bloco sem entregar a espada e executa o bloco do **SENÃO**, avisando educadamente que faltam moedas.
+* Se o guerreiro tiver `60 moedas`, a condição `60 >= 50` é **Verdadeira**. O Golem executa o primeiro bloco: calcula o troco, entrega a espada e comemora a venda!
+* Se o guerreiro tiver apenas `30 moedas`, a condição `30 >= 50` é **Falsa**. O Golem pula o primeiro bloco sem entregar a espada e executa o bloco do **SENÃO**, avisando educadamente que faltam moedas.
 
 O seu programa agora tem cérebro próprio: ele analisa a situação e toma o caminho correto!
 
@@ -64,21 +73,31 @@ Imagine que você queira dar descontos especiais na sua loja dependendo da class
 * Senão, se for um **Bárbaro**, dê uma tocha de brinde.
 * Senão (qualquer outra classe), cobre o preço normal de tabela.
 
-Na programação, essa cadeia de decisões intermediárias é chamada de **"Senão Se"** (que mais tarde, no Python, você vai conhecer pela palavrinha fofa `elif`).
+Na programação, essa cadeia de decisões intermediárias é chamada de **"Senão Se"**:
 
 ```text
-SE (classe_heroi == "Mago"):
+SE (classe do heroi == "Mago"):
+
     desconto = 0.20
-    Dizer: "Desconto arcano aplicado!"
-SENÃO SE (classe_heroi == "Clérigo"):
+    DIZER: "Desconto arcano aplicado!"
+
+
+SENÃO SE (classe do heroi == "Clérigo"):
+
     desconto = 0.15
-    Dizer: "Bênção divina concedida com desconto!"
-SENÃO SE (classe_heroi == "Bárbaro"):
+    DIZER: "Bênção divina concedida com desconto!"
+
+
+SENÃO SE (classe do heroi == "Bárbaro"):
+
     desconto = 0.0
-    Dizer: "Tome uma tocha grátis para iluminar sua caverna!"
+    DIZER: "Tome uma tocha grátis para iluminar sua caverna!"
+
+
 SENÃO:
+
     desconto = 0.0
-    Dizer: "Preço padrão de tabela aplicado."
+    DIZER: "Preço padrão de tabela aplicado."
 ```
 
 O computador lê essa lista de cima para baixo. Assim que ele encontra a primeira opção verdadeira, ele executa aquele bloco específico e ignora todo o resto!

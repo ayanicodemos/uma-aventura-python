@@ -56,7 +56,7 @@
       position: absolute;
       bottom: -6px;
       left: 20px;
-      width: 24px;
+      width: 26px;
       height: 6px;
       background: inherit;
       border-radius: 0 0 4px 4px;
@@ -67,14 +67,14 @@
       position: absolute;
       top: 0;
       left: 20px;
-      width: 24px;
+      width: 26px;
       height: 5px;
       background: #0c1017;
       border-radius: 0 0 4px 4px;
       z-index: 2;
     }
     .scratch-slot {
-      min-height: 52px;
+      min-height: 58px;
       transition: all 0.2s ease;
     }
     .scratch-slot.drag-over {
@@ -91,7 +91,7 @@
 </head>
 <body class="bg-rpg-bg text-slate-200 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- TOP HEADER / STATUS BAR -->
+  <!-- TOP STATUS BAR -->
   <header class="sticky top-0 z-40 bg-rpg-card/95 backdrop-blur-md border-b border-rpg-border px-4 lg:px-8 py-3 transition-all">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
       
@@ -164,7 +164,7 @@
           <span>💡</span> O Segredo da Aya
         </div>
         <p class="text-xs text-purple-200/90 leading-relaxed">
-          "Nunca tente decorar tudo! Os melhores programadores do mundo não decoram comandos; eles aprendem a <strong>lógica</strong> de dividir um problema grande em passos pequenininhos."
+          "Na lógica, não se preocupe com regras em inglês ou símbolos misteriosos. Pense em português claro e espaçado, como se estivesse anotando num bloco de notas do balcão!"
         </p>
       </div>
 
@@ -178,17 +178,17 @@
 
     </aside>
 
-    <!-- MAIN READING & INTERACTIVE CANVAS -->
+    <!-- MAIN READING CANVAS -->
     <main class="flex-1 flex flex-col gap-6">
 
       <!-- LESSON ARTICLE CONTAINER -->
       <article class="bg-rpg-card border border-rpg-border rounded-3xl p-6 lg:p-10 shadow-2xl relative overflow-hidden">
         <div class="absolute -right-20 -top-20 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-        <!-- Breadcrumb & Progress -->
+        <!-- Breadcrumb & Top Navigation Buttons -->
         <div class="flex items-center justify-between border-b border-rpg-border pb-4 mb-6">
           <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">
-            <span>Módulo 01</span> • <span id="currentLessonIndex">Lição 1 de 6</span>
+            <span>Módulo 01: Lógica Pura</span> • <span id="currentLessonIndex">Lição 1 de 6</span>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="prevLesson()" id="btnPrevLesson" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-medium flex items-center gap-1 border border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition">
@@ -201,85 +201,64 @@
         </div>
 
         <!-- Dynamic Lesson Content -->
-        <div id="lessonContent" class="prose prose-invert max-w-none text-slate-300 leading-relaxed space-y-5">
+        <div id="lessonContent" class="prose prose-invert max-w-none text-slate-300 leading-relaxed space-y-6">
           <!-- Injected via JS -->
         </div>
 
-        <!-- Next Step Action -->
-        <div class="mt-10 pt-6 border-t border-rpg-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-xs text-slate-400">
-            Terminou a leitura? Teste seus conhecimentos na <strong>Arena da Loja</strong> abaixo!
+        <!-- ARENA DE DESAFIOS ACTION BAR (AT THE END OF READING) -->
+        <div class="mt-12 pt-8 border-t border-rpg-border flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="font-fantasy font-bold text-base text-amber-400 flex items-center gap-2">
+                <span>⚔️</span> Arena de Provações do Módulo 1
+              </h4>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Conclua a leitura e enfrente os desafios dedicados para consolidar sua lógica!
+              </p>
+            </div>
+            <span id="arenaStatusBadge" class="text-xs font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">0 / 2 Concluídos</span>
           </div>
-          <button onclick="openQuizModal()" class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2">
-            <i data-lucide="help-circle" class="w-4 h-4"></i> Iniciar Desafio de Quiz (+30 🪙)
-          </button>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            
+            <!-- Button: Quiz Challenge -->
+            <button id="btnChallengeQuiz" onclick="openQuizModal()" class="p-4 rounded-2xl bg-gradient-to-br from-purple-950/60 to-slate-900 border-2 border-purple-500/40 hover:border-purple-400 text-left transition flex items-center justify-between group shadow-lg">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl p-2 rounded-xl bg-purple-500/20 group-hover:scale-110 transition">🧙‍♀️</span>
+                <div>
+                  <div class="font-fantasy font-bold text-sm text-purple-300 group-hover:text-purple-200">Desafio 1: Quiz do Balcão</div>
+                  <div class="text-[11px] text-slate-400" id="quizBtnSubtext">Teste seu conhecimento prático (+30 🪙)</div>
+                </div>
+              </div>
+              <span id="quizStatusIcon" class="w-8 h-8 rounded-full bg-purple-900/40 border border-purple-500/50 flex items-center justify-center text-purple-300 text-xs font-bold">
+                ➔
+              </span>
+            </button>
+
+            <!-- Button: Scratch Puzzle Challenge -->
+            <button id="btnChallengePuzzle" onclick="openPuzzleModal()" class="p-4 rounded-2xl bg-gradient-to-br from-amber-950/60 to-slate-900 border-2 border-amber-500/40 hover:border-amber-400 text-left transition flex items-center justify-between group shadow-lg">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl p-2 rounded-xl bg-amber-500/20 group-hover:scale-110 transition">🧩</span>
+                <div>
+                  <div class="font-fantasy font-bold text-sm text-amber-300 group-hover:text-amber-200">Desafio 2: Quebra-Cabeça de Blocos</div>
+                  <div class="text-[11px] text-slate-400" id="puzzleBtnSubtext">Encaixe a lógica estilo Scratch (+20 🪙)</div>
+                </div>
+              </div>
+              <span id="puzzleStatusIcon" class="w-8 h-8 rounded-full bg-amber-900/40 border border-amber-500/50 flex items-center justify-center text-amber-300 text-xs font-bold">
+                ➔
+              </span>
+            </button>
+
+          </div>
         </div>
+
       </article>
-
-      <!-- SCRATCH-STYLE INTERACTIVE CODE BLOCKS SECTION -->
-      <section class="bg-rpg-card border border-rpg-border rounded-3xl p-6 lg:p-8 shadow-2xl space-y-6">
-        
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-rpg-border pb-4">
-          <div>
-            <h3 class="text-xl font-fantasy font-bold text-amber-400 flex items-center gap-2">
-              <span>🧩</span> O Quebra-Cabeça de Blocos do Balcão (Estilo Scratch)
-            </h3>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Puxe e arraste os blocos lógicos com o mouse ou o dedo (no celular/tablet) para montar a rotina correta da sua loja!
-            </p>
-          </div>
-          <button onclick="resetScratchPuzzle()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Embaralhar Blocos
-          </button>
-        </div>
-
-        <!-- Problem Brief -->
-        <div class="bg-slate-950/80 border-l-4 border-amber-500 p-4 rounded-r-2xl text-xs text-slate-300 leading-relaxed">
-          <strong>📜 Missão do Balcão:</strong> Um guerreiro entra e quer comprar uma <em>Poção de Cura</em> por <strong>15 moedas</strong>. Ele te entrega <strong>20 moedas</strong>. Monte os blocos na ordem exata para registrar o preço, pegar o pagamento, calcular o troco e entregar o recibo!
-        </div>
-
-        <!-- 2 Columns: Toolbox (Left) & Canvas (Right) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          
-          <!-- Column 1: Toolbox / Banco de Blocos -->
-          <div class="flex flex-col gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-              <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-400"></i> Banco de Blocos Disponíveis
-            </span>
-            <p class="text-[11px] text-slate-500">Arraste ou clique no bloco para enviar para a sequência:</p>
-            <div id="scratchToolbox" class="space-y-3 min-h-[220px]">
-              <!-- Dynamically populated Scratch-like blocks -->
-            </div>
-          </div>
-
-          <!-- Column 2: Snap Target / Sequência de Execução -->
-          <div class="flex flex-col gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-3.5 h-3.5"></i> Sua Sequência da Loja (Passo a Passo)
-            </span>
-            <p class="text-[11px] text-slate-500">Solte os blocos aqui na ordem em que o Golem deve executar:</p>
-            <div id="scratchDropZone" class="space-y-3 min-h-[220px]">
-              <!-- Target slots -->
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Action / Verify Button -->
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-          <div id="scratchFeedback" class="text-xs font-bold"></div>
-          <button onclick="verifyScratchPuzzle()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
-            <i data-lucide="play" class="w-4 h-4"></i> Testar Execução da Sequência (+20 🪙)
-          </button>
-        </div>
-
-      </section>
 
     </main>
 
   </div>
 
-  <!-- FULLSCREEN RPG QUIZ MODAL -->
+  <!-- MODAL 1: FULLSCREEN RPG QUIZ -->
   <div id="quizModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
     <div class="bg-rpg-card border-2 border-purple-500/50 rounded-3xl max-w-2xl w-full p-6 lg:p-8 shadow-2xl relative flex flex-col gap-6 overflow-hidden">
       
@@ -288,7 +267,7 @@
         <div class="flex items-center gap-2.5">
           <span class="text-2xl">🧙‍♀️</span>
           <div>
-            <h4 class="font-fantasy font-bold text-lg text-purple-300">Desafio da Loja da Aya</h4>
+            <h4 class="font-fantasy font-bold text-lg text-purple-300">Desafio do Balcão da Loja</h4>
             <span id="quizQuestionCounter" class="text-xs text-slate-400 font-mono">Pergunta 1 de 3</span>
           </div>
         </div>
@@ -318,10 +297,76 @@
 
       <!-- Modal Footer -->
       <div class="flex items-center justify-between pt-2 border-t border-rpg-border">
-        <span class="text-[11px] text-slate-500">Responda com calma: você ganha moedas a cada acerto!</span>
+        <span class="text-[11px] text-slate-500">Responda com calma: aprenda a razão de cada escolha!</span>
         <button id="btnNextQuiz" onclick="nextQuizQuestion()" class="hidden bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl transition shadow flex items-center gap-2">
           Avançar <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 2: DEDICATED SCRATCH-STYLE PUZZLE SCREEN -->
+  <div id="puzzleModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-rpg-card border-2 border-amber-500/50 rounded-3xl max-w-3xl w-full p-6 lg:p-8 shadow-2xl relative flex flex-col gap-6 overflow-hidden max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-rpg-border pb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl">🧩</span>
+          <div>
+            <h4 class="font-fantasy font-bold text-lg text-amber-300">Quebra-Cabeça de Blocos da Loja</h4>
+            <span class="text-xs text-slate-400">Puxe os blocos com o mouse ou toque com o dedo para encaixar</span>
+          </div>
+        </div>
+        <button onclick="closePuzzleModal()" class="text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-700">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Problem Brief -->
+      <div class="bg-slate-950 p-4 rounded-2xl border-l-4 border-amber-500 text-xs text-slate-300 leading-relaxed">
+        <strong>📜 Missão do Balcão:</strong> Um guerreiro entra e quer comprar uma <em>Poção de Cura</em> que custa <strong>15 moedas</strong>. Ele te entrega <strong>20 moedas</strong>. Encaixe os blocos em português na ordem exata para registrar o preço, pegar o pagamento, calcular o troco e entregar o recibo!
+      </div>
+
+      <!-- 2 Columns: Toolbox (Left) & Canvas (Right) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        
+        <!-- Column 1: Toolbox / Banco de Blocos -->
+        <div class="flex flex-col gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+          <span class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-400"></i> Blocos Disponíveis
+          </span>
+          <p class="text-[11px] text-slate-500">Toque ou arraste o bloco para enviar para a sequência:</p>
+          <div id="scratchToolbox" class="space-y-3 min-h-[220px]">
+            <!-- Dynamically populated Scratch-like blocks -->
+          </div>
+        </div>
+
+        <!-- Column 2: Snap Target / Sequência de Execução -->
+        <div class="flex flex-col gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+          <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="check-square" class="w-3.5 h-3.5"></i> Sua Sequência da Loja (Passo a Passo)
+          </span>
+          <p class="text-[11px] text-slate-500">Solte os blocos aqui na ordem correta:</p>
+          <div id="scratchDropZone" class="space-y-3 min-h-[220px]">
+            <!-- Target slots -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action / Feedback Area -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-rpg-border">
+        <div id="scratchFeedback" class="text-xs font-bold"></div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button onclick="resetScratchPuzzle()" class="px-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-400 text-xs font-medium">
+            Embaralhar
+          </button>
+          <button onclick="verifyScratchPuzzle()" class="flex-1 sm:flex-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider px-6 py-2.5 rounded-xl transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+            <i data-lucide="play" class="w-4 h-4"></i> Testar Sequência (+20 🪙)
+          </button>
+        </div>
       </div>
 
     </div>
@@ -335,9 +380,9 @@
     </div>
   </footer>
 
-  <!-- PLATFORM LOGIC SCRIPT -->
+  <!-- SCRIPT ENGINE -->
   <script>
-    // 1. LESSON DATA (FULL RICH CONTENT OF MODULE 1 IN AYA'S AUTHENTIC VOICE)
+    // 1. MODULE 1 LESSONS (100% PORTUGUESE LOGIC, PROPER SPACING, ZERO UNDERSCORES)
     const lessons = [
       {
         id: 1,
@@ -351,16 +396,16 @@
           <p>
             Para entender como viemos parar aqui — com você se preparando para gerenciar sua própria loja de itens e poções com a ajuda de um Golem digital —, nós precisamos voltar um pouquinho no tempo e ter uma rápida aula de história.
           </p>
-          <div class="bg-slate-900/90 border-l-4 border-amber-500 p-4 rounded-r-2xl my-4 text-sm space-y-2">
-            <h4 class="font-bold text-amber-300">📜 As Pioneiras da Nossa História:</h4>
-            <p><strong>Ada Lovelace (Século XIX):</strong> Junto de Charles Babbage, percebeu que em vez de forjar uma máquina mecânica para cada cálculo, podiam criar uma máquina geral que lesse cartões com instruções lógicas. <em>Ela escreveu o primeiro programa da história humana!</em></p>
-            <p><strong>Grace Hopper (1952):</strong> Almirante da Marinha dos EUA que se recusou a aceitar que humanos precisassem falar em 'linguagem de máquina' binária incompreensível. Ela inventou o primeiro <strong>Compilador</strong>, provando que máquinas podiam traduzir termos em inglês para circuitos elétricos.</p>
+          <div class="bg-slate-900/90 border-l-4 border-amber-500 p-5 rounded-r-2xl my-4 text-sm space-y-3">
+            <h4 class="font-bold text-amber-300 text-base">📜 As Pioneiras da Nossa História:</h4>
+            <p><strong>Ada Lovelace (Século XIX):</strong> Junto de Charles Babbage, percebeu que em vez de forjar uma máquina mecânica para cada cálculo matemático, podiam criar uma máquina geral que funcionasse através de um algoritmo programável. <em>Ela escreveu o primeiro programa da história humana!</em></p>
+            <p><strong>Grace Hopper (1952):</strong> Almirante da Marinha dos EUA que se recusou a aceitar que humanos precisassem programar em linguagem binária pura. Ela inventou o primeiro <strong>Compilador</strong>, provando que máquinas podiam traduzir termos compreensíveis em inglês para circuitos elétricos.</p>
           </div>
           <p>
-            Uma <strong>linguagem de programação</strong> é simplesmente a forma que usamos para conversar com o computador e pedir que ele realize tarefas específicas. É como escrever uma <strong>receita de bolo extremamente detalhada</strong> para um ajudante na cozinha da loja: você precisa dizer cada ingrediente e cada passo na ordem exata.
+            Uma <strong>linguagem de programação</strong> é simplesmente a forma que usamos para conversar com o computador e pedir que ele realize tarefas específicas. É como escrever uma <strong>receita de bolo de cenoura extremamente detalhada</strong> para um ajudante na cozinha da loja: você precisa dizer cada ingrediente e cada passo na ordem exata.
           </p>
           <p>
-            E o <strong>Python</strong>? O Python é uma linguagem de altíssimo nível, moderna e <em>interpretada</em>. Ela lê o seu código linha por linha em tempo real, sem você ter que gerar arquivos <code>.EXE</code> complexos, tornando o aprendizado muito mais leve e divertido!
+            E o <strong>Python</strong>? O Python é uma linguagem de altíssimo nível, moderna e <em>interpretada</em>. Ela lê o seu código linha por linha em tempo real, sem você ter que gerar arquivos <code>.EXE</code> complicados, tornando o aprendizado muito mais leve e divertido!
           </p>
         `
       },
@@ -373,10 +418,10 @@
           <p class="text-base text-slate-200">
             Não se assuste com o nome pomposo! Muita gente acha que "lógica" é uma matéria assustadora cheia de fórmulas matemáticas alienígenas. Na verdade, você já usa lógica todos os dias da sua vida.
           </p>
-          <div class="bg-slate-900/90 border-l-4 border-blue-500 p-4 rounded-r-2xl my-4 text-sm space-y-2">
-            <h4 class="font-bold text-blue-300">🥖 O Exemplo do Pão na Padaria do Reino:</h4>
+          <div class="bg-slate-900/90 border-l-4 border-blue-500 p-5 rounded-r-2xl my-4 text-sm space-y-2">
+            <h4 class="font-bold text-blue-300 text-base">🥖 O Exemplo do Pão na Padaria do Reino:</h4>
             <p>Digamos que você tenha <strong>5 moedas de ouro</strong> no bolso e queira comprar um pão que custa <strong>2 moedas</strong>.</p>
-            <ol class="list-decimal list-inside space-y-1 text-slate-300">
+            <ol class="list-decimal list-inside space-y-1.5 text-slate-300 mt-2">
               <li>Você confere o preço: 2 moedas.</li>
               <li>Você olha o bolso: tem 5 moedas.</li>
               <li>Comparação mental: 5 é maior ou igual a 2? (Sim!).</li>
@@ -403,53 +448,48 @@
             A variável é como uma <strong>caixinha mágica com uma etiqueta colada na frente</strong> (tipo a bolsa da Hermione onde cabe de tudo).
           </p>
           <p>
-            Atrás do balcão da sua loja, você tem gavetas com etiquetas:
+            Atrás do balcão da sua loja, você tem gavetas com etiquetas claras em português, sem necessidade de underlines:
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4 text-xs font-mono">
-            <div class="p-3 rounded-xl bg-slate-900 border border-amber-500/40">
-              <span class="text-amber-400 font-bold block mb-1">🏷️ moedas_ouro</span>
-              <span class="text-slate-300">Guarda: 100</span>
-              <span class="text-slate-500 block text-[10px] mt-1">Tipo: int (Inteiro)</span>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-900 border border-blue-500/40">
-              <span class="text-blue-400 font-bold block mb-1">🏷️ nome_pocao</span>
-              <span class="text-slate-300">Guarda: "Cura Máxima"</span>
-              <span class="text-slate-500 block text-[10px] mt-1">Tipo: string (Texto com aspas!)</span>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-900 border border-emerald-500/40">
-              <span class="text-emerald-400 font-bold block mb-1">🏷️ loja_aberta</span>
-              <span class="text-slate-300">Guarda: True</span>
-              <span class="text-slate-500 block text-[10px] mt-1">Tipo: bool (True ou False)</span>
-            </div>
+          <div class="bg-slate-900/90 border border-slate-700 p-5 rounded-2xl my-4 font-mono text-xs space-y-3 leading-relaxed">
+            <p><span class="text-amber-400 font-bold">nome da loja</span> = "Empório Mágico da Aya"</p>
+            <p><span class="text-blue-400 font-bold">quantidade de pocoes</span> = 15</p>
+            <p><span class="text-emerald-400 font-bold">preco da pocao</span> = 12.50</p>
+            <p><span class="text-purple-400 font-bold">loja aberta</span> = Verdadeiro</p>
           </div>
           <p>
             <strong>A Regra Sagrada das Aspas:</strong> Palavras e textos sempre vêm entre aspas (<code>"Abacate"</code>), para avisar ao computador que aquilo é uma frase humana e não uma conta matemática.
           </p>
           <p>
-            <strong>Aviso de Ponto vs Vírgula:</strong> No computador, decimais usam ponto inglês: escreva <code>12.50</code> e nunca <code>12,50</code>!
+            <strong>Aviso de Ponto vs Vírgula:</strong> No computador, decimais usam ponto: escreva <code>12.50</code> e nunca <code>12,50</code>!
           </p>
         `
       },
       {
         id: 4,
-        title: "1.4 Operadores Lógicos",
+        title: "1.4 Operadores do Python",
         subtitle: "Contas, o sinal de igual (= vs ==) e comparações",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.4: Operadores Lógicos e Matemáticos</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.4: Operadores Matemáticos e Lógicos</h2>
           <p class="text-base text-slate-200">
-            O que fazemos com as caixinhas? Fazemos contas e comparações usando os Operadores!
+            No Python, usamos exatamente os seguintes símbolos para fazer contas e comparações:
           </p>
-          <div class="bg-slate-900/90 border-l-4 border-ruby p-4 rounded-r-2xl my-4 text-sm space-y-2">
-            <h4 class="font-bold text-ruby">⚔️ O Duelo: '=' (Guardar) vs. '==' (Comparar)</h4>
-            <p><strong>Um sinal de igual (=):</strong> Atribuição. Coloca algo dentro da caixa. <em>Exemplo:</em> <code>preco = 25</code>.</p>
-            <p><strong>Dois sinais de igual (==):</strong> Pergunta de igualdade. Pergunta se são idênticos. <em>Exemplo:</em> <code>senha == "abracadabra"</code>.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 font-mono text-xs">
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>+</code> (Adição)</div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>-</code> (Subtração)</div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>*</code> (Multiplicação)</div>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>/</code> (Divisão)</div>
+          </div>
+          <div class="bg-slate-900/90 border-l-4 border-ruby p-5 rounded-r-2xl my-4 text-sm space-y-2">
+            <h4 class="font-bold text-ruby text-base">⚔️ O Duelo: '=' (Guardar) vs. '==' (Comparar)</h4>
+            <p><strong>Um sinal de igual (=):</strong> Atribuição. Guarda o valor na gaveta. <em>Exemplo:</em> <code>preco da pocao = 15</code>.</p>
+            <p><strong>Dois sinais de igual (==):</strong> Comparação. Pergunta se são idênticos. <em>Exemplo:</em> <code>senha digitada == "abracadabra"</code>.</p>
           </div>
           <p>
             Para comparar grandezas no balcão:
             <br>• <code>></code> (Maior que) e <code><</code> (Menor que)
             <br>• <code>>=</code> (Maior ou igual) e <code><=</code> (Menor ou igual)
             <br>• <code>!=</code> (Diferente de: o ponto de exclamação grita 'NÃO é igual!')
-            <br>• <code>and</code> (E: exige que ambas as condições sejam verdadeiras) e <code>or</code> (OU: basta uma ser verdadeira).
+            <br>• <code>and</code> (E) e <code>or</code> (OU) e <code>not</code> (NÃO).
           </p>
         `
       },
@@ -460,18 +500,20 @@
         html: `
           <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.5: O Famoso 'Se' (Condicionais)</h2>
           <p class="text-base text-slate-200">
-            Até aqui, o código andava em linha reta. Mas a vida da loja exige decisões! Você não entrega uma espada para quem não tem dinheiro no bolso.
+            A vida da loja exige decisões! Você não entrega uma espada para quem não tem dinheiro no bolso.
           </p>
-          <div class="bg-slate-900/90 border-l-4 border-amber-500 p-4 rounded-r-2xl my-4 text-xs font-mono space-y-1 leading-relaxed">
-            <p class="text-amber-300 font-bold">SE (ouro_cliente >= preco_espada):</p>
-            <p class="pl-4 text-slate-200">troco = ouro_cliente - preco_espada</p>
-            <p class="pl-4 text-slate-200">Dizer: "Parabéns pela compra! Seu troco é de " + troco</p>
-            <p class="pl-4 text-slate-200">Entregar Espada de Aço</p>
-            <p class="text-amber-300 font-bold">SENÃO:</p>
-            <p class="pl-4 text-slate-200">Dizer: "Volte ao calabouço para juntar mais ouro!"</p>
+          <div class="bg-slate-900/90 border-l-4 border-amber-500 p-5 rounded-r-2xl my-4 text-xs font-mono space-y-3 leading-relaxed">
+            <p class="text-slate-400">preco da espada = 50</p>
+            <p class="text-slate-400">ouro do guerreiro = 60</p>
+            <p class="text-amber-300 font-bold pt-2">SE (ouro do guerreiro >= preco da espada):</p>
+            <p class="pl-6 text-slate-200">troco = ouro do guerreiro - preco da espada</p>
+            <p class="pl-6 text-slate-200">DIZER: "Parabéns pela compra! Seu troco é de " + troco</p>
+            <p class="pl-6 text-slate-200">ENTREGAR: Espada de Aço</p>
+            <p class="text-amber-300 font-bold pt-2">SENÃO:</p>
+            <p class="pl-6 text-slate-200">DIZER: "Volte ao calabouço para juntar mais ouro!"</p>
           </div>
           <p>
-            O computador analisa a pergunta. Se a resposta for <code>True</code>, executa o primeiro bloco. Se for <code>False</code>, pula direto para o <strong>SENÃO</strong>!
+            O computador analisa a pergunta. Se a resposta for <code>Verdadeiro</code>, executa o primeiro bloco. Se for <code>Falso</code>, pula direto para o <strong>SENÃO</strong>!
           </p>
           <p>
             <strong>A Indentação:</strong> O espacinho empurrado para a direita mostra quais comandos estão guardados dentro daquela decisão!
@@ -481,28 +523,29 @@
       {
         id: 6,
         title: "1.6 Executar e Repetir",
-        subtitle: "Laços 'Enquanto' (while) e 'Para' (for) para atender filas e estoques",
+        subtitle: "Laços 'Enquanto' e 'Para' para atender filas e estoques",
         html: `
           <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.6: Executar e Repetir (Laços de Repetição)</h2>
           <p class="text-base text-slate-200">
             A sua loja fez tanto sucesso que há uma fila de 100 heróis na porta! Você não vai copiar e colar o mesmo código 100 vezes.
           </p>
-          <div class="bg-slate-900/90 border-l-4 border-emerald-500 p-4 rounded-r-2xl my-4 text-xs font-mono space-y-1 leading-relaxed">
-            <p class="text-emerald-300 font-bold">clientes_na_fila = 10</p>
-            <p class="text-emerald-300 font-bold">ENQUANTO (clientes_na_fila > 0):</p>
-            <p class="pl-4 text-slate-200">Dizer: "Próximo aventureiro, por favor!"</p>
-            <p class="pl-4 text-slate-200">Atender pedido e entregar item</p>
-            <p class="pl-4 text-slate-200">clientes_na_fila = clientes_na_fila - 1</p>
-            <p class="text-slate-400 mt-2">// O laço roda 10 vezes até a fila zerar sozinho!</p>
+          <div class="bg-slate-900/90 border-l-4 border-emerald-500 p-5 rounded-r-2xl my-4 text-xs font-mono space-y-3 leading-relaxed">
+            <p class="text-slate-400">clientes na fila = 10</p>
+            <p class="text-emerald-300 font-bold pt-2">ENQUANTO (clientes na fila > 0):</p>
+            <p class="pl-6 text-slate-200">DIZER: "Próximo aventureiro, por favor!"</p>
+            <p class="pl-6 text-slate-200">ATENDER: pedido do heroi</p>
+            <p class="pl-6 text-slate-200">ENTREGAR: item comprado</p>
+            <p class="pl-6 text-slate-200">clientes na fila = clientes na fila - 1</p>
+            <p class="text-slate-400 pt-2">// O laço roda 10 vezes até a fila zerar sozinho!</p>
           </div>
           <p>
-            <strong>ENQUANTO (While):</strong> Repete enquanto uma condição for verdadeira. (Atenção para não esquecer de diminuir a fila, senão vira um loop infinito!).
+            <strong>ENQUANTO:</strong> Repete enquanto uma condição for verdadeira.
           </p>
           <p>
-            <strong>PARA (For):</strong> Repete para cada item de uma caixa ou lista (ex: para cada frasco de poção, cole a etiqueta).
+            <strong>PARA CADA:</strong> Repete para cada item de uma caixa ou lista (ex: para cada frasco de poção, cole a etiqueta).
           </p>
           <div class="bg-amber-500/10 border border-amber-500/40 p-4 rounded-2xl text-amber-300 font-bold text-sm my-4 text-center">
-            🎉 Parabéns! Você concluiu a Lógica Fundamental da Loja! Você já pensa como um programador e está pronto para o Módulo 2!
+            🎉 Parabéns! Você concluiu a Lógica Fundamental da Loja! Você já pensa como um programador e está pronto para os desafios abaixo!
           </div>
         `
       }
@@ -532,7 +575,6 @@
         nav.appendChild(btn);
       });
 
-      // Update Header & Lesson Content
       const current = lessons[currentLessonIndex];
       document.getElementById('currentLessonIndex').textContent = `Lição ${currentLessonIndex + 1} de ${lessons.length}`;
       document.getElementById('lessonContent').innerHTML = current.html;
@@ -554,149 +596,76 @@
       if (currentLessonIndex < lessons.length - 1) selectLesson(currentLessonIndex + 1);
     }
 
-    // 2. SCRATCH-STYLE DRAGGABLE PUZZLE BLOCKS (TOUCH & MOUSE FRIENDLY)
-    const scratchAvailableBlocks = [
-      { id: 'b1', text: 'preco_pocao = 15', category: 'var', color: 'bg-amber-600 hover:bg-amber-500 border-amber-400' },
-      { id: 'b2', text: 'ouro_cliente = 20', category: 'var', color: 'bg-amber-600 hover:bg-amber-500 border-amber-400' },
-      { id: 'b3', text: 'troco = ouro_cliente - preco_pocao', category: 'math', color: 'bg-emerald-600 hover:bg-emerald-500 border-emerald-400' },
-      { id: 'b4', text: 'entregar_recibo(troco)', category: 'event', color: 'bg-blue-600 hover:bg-blue-500 border-blue-400' }
-    ];
+    // 2. GAMIFICATION STATE
+    let state = {
+      gold: parseInt(localStorage.getItem('aya_gold') || '50'),
+      quizDone: localStorage.getItem('aya_quiz_done') === 'true',
+      puzzleDone: localStorage.getItem('aya_puzzle_done') === 'true'
+    };
 
-    let scratchUserSequence = [null, null, null, null];
-    let draggedBlockId = null;
+    function updateGamificationUI() {
+      document.getElementById('goldCount').textContent = state.gold;
+      localStorage.setItem('aya_gold', state.gold);
+      localStorage.setItem('aya_quiz_done', state.quizDone);
+      localStorage.setItem('aya_puzzle_done', state.puzzleDone);
 
-    function renderScratchToolbox() {
-      const toolbox = document.getElementById('scratchToolbox');
-      toolbox.innerHTML = '';
+      // Update Challenge Buttons Status
+      let completedCount = 0;
+      if (state.quizDone) {
+        completedCount++;
+        const btn = document.getElementById('btnChallengeQuiz');
+        btn.classList.replace('border-purple-500/40', 'border-emerald-500/60');
+        document.getElementById('quizBtnSubtext').textContent = 'Missão Concluída! (+30 🪙 Coletadas)';
+        document.getElementById('quizStatusIcon').className = 'w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 font-bold';
+        document.getElementById('quizStatusIcon').textContent = '✓';
+      }
 
-      scratchAvailableBlocks.forEach(block => {
-        const isPlaced = scratchUserSequence.includes(block.id);
-        const el = document.createElement('div');
-        el.className = `scratch-block p-3 rounded-xl border text-xs font-mono font-bold text-white shadow-md flex items-center justify-between cursor-pointer transition ${block.color} ${isPlaced ? 'opacity-30 cursor-not-allowed scale-95' : 'hover:scale-[1.02]'}`;
-        el.draggable = !isPlaced;
-        el.innerHTML = `
-          <span>🧩 ${block.text}</span>
-          <span class="text-[10px] opacity-75 uppercase font-sans">${isPlaced ? 'Encaixado' : 'Arraste / Toque'}</span>
-        `;
+      if (state.puzzleDone) {
+        completedCount++;
+        const btn = document.getElementById('btnChallengePuzzle');
+        btn.classList.replace('border-amber-500/40', 'border-emerald-500/60');
+        document.getElementById('puzzleBtnSubtext').textContent = 'Quebra-Cabeça Concluído! (+20 🪙 Coletadas)';
+        document.getElementById('puzzleStatusIcon').className = 'w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-emerald-400 font-bold';
+        document.getElementById('puzzleStatusIcon').textContent = '✓';
+      }
 
-        if (!isPlaced) {
-          // Drag and drop support
-          el.addEventListener('dragstart', (e) => {
-            draggedBlockId = block.id;
-            e.dataTransfer.setData('text/plain', block.id);
-          });
-          // Touch / Tap support for tablets and phones
-          el.onclick = () => {
-            const firstEmptySlot = scratchUserSequence.indexOf(null);
-            if (firstEmptySlot !== -1) {
-              scratchUserSequence[firstEmptySlot] = block.id;
-              renderScratchCanvas();
-              renderScratchToolbox();
-            }
-          };
-        }
-        toolbox.appendChild(el);
-      });
-    }
+      document.getElementById('arenaStatusBadge').textContent = `${completedCount} / 2 Concluídos`;
 
-    function renderScratchCanvas() {
-      const canvas = document.getElementById('scratchDropZone');
-      canvas.innerHTML = '';
-
-      for (let i = 0; i < 4; i++) {
-        const slot = document.createElement('div');
-        slot.className = 'scratch-slot p-2.5 rounded-xl border-2 border-dashed border-slate-700 bg-slate-900/60 flex items-center justify-between text-xs font-mono';
-        
-        const blockId = scratchUserSequence[i];
-        if (blockId) {
-          const block = scratchAvailableBlocks.find(b => b.id === blockId);
-          slot.className = `scratch-block scratch-slot p-3 rounded-xl border text-xs font-mono font-bold text-white shadow-lg flex items-center justify-between ${block.color}`;
-          slot.innerHTML = `
-            <span>${i + 1}. ${block.text}</span>
-            <button onclick="removeBlockFromSlot(${i})" class="text-xs bg-black/30 hover:bg-black/50 p-1 rounded font-sans px-2">Remover ✕</button>
-          `;
-        } else {
-          slot.innerHTML = `<span class="text-slate-500 font-sans text-xs">Espaço #${i + 1}: Solte ou clique num bloco acima</span>`;
-          // Drop events
-          slot.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            slot.classList.add('drag-over');
-          });
-          slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
-          slot.addEventListener('drop', (e) => {
-            e.preventDefault();
-            slot.classList.remove('drag-over');
-            const id = e.dataTransfer.getData('text/plain') || draggedBlockId;
-            if (id && !scratchUserSequence.includes(id)) {
-              scratchUserSequence[i] = id;
-              renderScratchCanvas();
-              renderScratchToolbox();
-            }
-          });
-        }
-        canvas.appendChild(slot);
+      if (state.gold >= 100) {
+        document.getElementById('rankTitle').textContent = 'Alquimista Contábil';
       }
     }
 
-    function removeBlockFromSlot(index) {
-      scratchUserSequence[index] = null;
-      renderScratchCanvas();
-      renderScratchToolbox();
+    function rewardXP(amount) {
+      state.gold += amount;
+      updateGamificationUI();
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
     }
 
-    function resetScratchPuzzle() {
-      scratchUserSequence = [null, null, null, null];
-      renderScratchCanvas();
-      renderScratchToolbox();
-      document.getElementById('scratchFeedback').textContent = '';
-    }
-
-    function verifyScratchPuzzle() {
-      const feedback = document.getElementById('scratchFeedback');
-      const expected = ['b1', 'b2', 'b3', 'b4'];
-      const isComplete = scratchUserSequence.every(x => x !== null);
-
-      if (!isComplete) {
-        feedback.className = 'text-xs font-bold text-amber-400';
-        feedback.textContent = '⚠️ Encaixe todos os 4 blocos na sequência antes de testar!';
-        return;
-      }
-
-      const isCorrect = scratchUserSequence.every((val, idx) => val === expected[idx]);
-      if (isCorrect) {
-        feedback.className = 'text-xs font-bold text-emerald-400';
-        feedback.textContent = '🌟 Brilhante! A lógica está impecável: preço -> ouro -> troco -> recibo!';
-        rewardXP(20);
-      } else {
-        feedback.className = 'text-xs font-bold text-ruby';
-        feedback.textContent = '❌ A ordem ainda não está certa. Lembre-se: primeiro defina os valores, depois faça a conta, e só então entregue o recibo!';
-      }
-    }
-
-    // 3. FULLSCREEN RPG QUIZ MODAL
+    // 3. FULLSCREEN RPG QUIZ
     const quizData = [
       {
-        scenario: "Um guerreiro entra na sua loja para comprar uma Poção de Cura por 15 moedas de ouro. Você quer salvar o preço dentro de uma caixinha com a etiqueta 'preco'.",
-        question: "Como o seu Golem ajudante deve guardar o número 15 dentro da variável?",
+        scenario: "Um guerreiro entra na sua loja para comprar uma Poção de Cura por 15 moedas de ouro. Você quer salvar o preço dentro de uma caixinha com a etiqueta 'preco da pocao'.",
+        question: "Como o seu Golem ajudante deve guardar o número 15 dentro da variável em português?",
         options: [
-          { text: "preco == 15", correct: false, tip: "O '==' serve para perguntar se são iguais, e não para guardar!" },
-          { text: "preco = 15", correct: true, tip: "Exato! Um sinal de '=' sozinho serve para guardar o valor na caixinha!" },
-          { text: "preco = '15 moedas de ouro'", correct: false, tip: "Colocar aspas transforma em texto e você não conseguirá subtrair no troco!" },
-          { text: "15 = preco", correct: false, tip: "A etiqueta da caixinha sempre vem do lado esquerdo!" }
+          { text: "preco da pocao == 15", correct: false, tip: "O '==' serve para perguntar se são iguais, e não para guardar!" },
+          { text: "preco da pocao = 15", correct: true, tip: "Exato! Um sinal de '=' sozinho serve para guardar o valor na caixinha!" },
+          { text: "preco da pocao = '15 moedas'", correct: false, tip: "Colocar aspas transforma em texto e você não conseguirá subtrair no troco!" },
+          { text: "15 = preco da pocao", correct: false, tip: "A etiqueta da caixinha sempre vem do lado esquerdo!" }
         ]
       },
       {
         scenario: "Você quer escrever na vitrine a frase: 'Promoção do Empório da Aya'.",
         question: "Por que as frases e textos sempre precisam estar protegidos entre aspas?",
         options: [
-          { text: "Para o computador saber que é um texto humano e não tentar fazer contas", correct: true, tip: "Perfeito! As aspas são o escudo protetor da String!" },
+          { text: "Para o computador saber que é um texto humano e não tentar fazer contas matemáticas", correct: true, tip: "Perfeito! As aspas são o escudo protetor da String!" },
           { text: "Porque o computador só lê palavras em maiúsculas", correct: false, tip: "Não, maiúsculas ou minúsculas não alteram essa regra." },
-          { text: "Para transformar a frase num número inteiro", correct: false, tip: "Aspas criam Strings (textos), não números." },
+          { text: "Para transformar a frase num número inteiro", correct: false, tip: "Aspas criam textos (Strings), não números." },
           { text: "Não precisa de aspas, é apenas opcional", correct: false, tip: "Sem aspas, o computador acha que são variáveis desconhecidas e trava!" }
         ]
       },
       {
-        scenario: "Há uma fila de heróis na porta e você usou a estrutura ENQUANTO (clientes_na_fila > 0).",
+        scenario: "Há uma fila de heróis na porta e você usou a estrutura ENQUANTO (clientes na fila > 0).",
         question: "O que acontece se você esquecer de diminuir a fila a cada cliente atendido?",
         options: [
           { text: "O programa fecha sozinho com sucesso", correct: false, tip: "Ele nunca fecharia porque a condição continuaria sempre verdadeira!" },
@@ -751,7 +720,6 @@
         button.classList.replace('border-slate-700', 'border-emerald-500');
         feedbackBox.className = 'p-4 rounded-xl text-xs bg-emerald-950/60 border border-emerald-500 text-emerald-300';
         feedbackBox.innerHTML = `<strong>✨ Resposta Correta!</strong> ${option.tip}`;
-        rewardXP(10);
       } else {
         button.classList.replace('bg-slate-900', 'bg-ruby/30');
         button.classList.replace('border-slate-700', 'border-ruby');
@@ -768,34 +736,152 @@
         renderQuizQuestion();
       } else {
         closeQuizModal();
+        if (!state.quizDone) {
+          state.quizDone = true;
+          rewardXP(30);
+        }
         confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
         alert('🎉 Incrível! Você completou todas as perguntas do Quiz do Mestre Comerciante!');
       }
     }
 
-    // 4. GAMIFICATION STATE
-    let gold = parseInt(localStorage.getItem('aya_gold') || '50');
+    // 4. DEDICATED SCRATCH-STYLE PUZZLE MODAL (100% PORTUGUESE, NO UNDERSCORES)
+    const scratchAvailableBlocks = [
+      { id: 'b1', text: 'preco da pocao = 15', category: 'var', color: 'bg-amber-600 hover:bg-amber-500 border-amber-400' },
+      { id: 'b2', text: 'ouro do cliente = 20', category: 'var', color: 'bg-amber-600 hover:bg-amber-500 border-amber-400' },
+      { id: 'b3', text: 'troco = ouro do cliente - preco da pocao', category: 'math', color: 'bg-emerald-600 hover:bg-emerald-500 border-emerald-400' },
+      { id: 'b4', text: 'DIZER: "Seu troco é de " + troco', category: 'event', color: 'bg-blue-600 hover:bg-blue-500 border-blue-400' }
+    ];
 
-    function updateGoldUI() {
-      document.getElementById('goldCount').textContent = gold;
-      localStorage.setItem('aya_gold', gold);
-      if (gold >= 100) {
-        document.getElementById('rankTitle').textContent = 'Alquimista Contábil';
+    let scratchUserSequence = [null, null, null, null];
+    let draggedBlockId = null;
+
+    function openPuzzleModal() {
+      document.getElementById('puzzleModal').classList.remove('hidden');
+      renderScratchCanvas();
+      renderScratchToolbox();
+    }
+
+    function closePuzzleModal() {
+      document.getElementById('puzzleModal').classList.add('hidden');
+    }
+
+    function renderScratchToolbox() {
+      const toolbox = document.getElementById('scratchToolbox');
+      toolbox.innerHTML = '';
+
+      scratchAvailableBlocks.forEach(block => {
+        const isPlaced = scratchUserSequence.includes(block.id);
+        const el = document.createElement('div');
+        el.className = `scratch-block p-3 rounded-xl border text-xs font-mono font-bold text-white shadow-md flex items-center justify-between cursor-pointer transition ${block.color} ${isPlaced ? 'opacity-30 cursor-not-allowed scale-95' : 'hover:scale-[1.02]'}`;
+        el.draggable = !isPlaced;
+        el.innerHTML = `
+          <span>🧩 ${block.text}</span>
+          <span class="text-[10px] opacity-75 uppercase font-sans">${isPlaced ? 'Encaixado' : 'Arraste / Toque'}</span>
+        `;
+
+        if (!isPlaced) {
+          el.addEventListener('dragstart', (e) => {
+            draggedBlockId = block.id;
+            e.dataTransfer.setData('text/plain', block.id);
+          });
+          el.onclick = () => {
+            const firstEmptySlot = scratchUserSequence.indexOf(null);
+            if (firstEmptySlot !== -1) {
+              scratchUserSequence[firstEmptySlot] = block.id;
+              renderScratchCanvas();
+              renderScratchToolbox();
+            }
+          };
+        }
+        toolbox.appendChild(el);
+      });
+    }
+
+    function renderScratchCanvas() {
+      const canvas = document.getElementById('scratchDropZone');
+      canvas.innerHTML = '';
+
+      for (let i = 0; i < 4; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'scratch-slot p-2.5 rounded-xl border-2 border-dashed border-slate-700 bg-slate-900/60 flex items-center justify-between text-xs font-mono';
+        
+        const blockId = scratchUserSequence[i];
+        if (blockId) {
+          const block = scratchAvailableBlocks.find(b => b.id === blockId);
+          slot.className = `scratch-block scratch-slot p-3 rounded-xl border text-xs font-mono font-bold text-white shadow-lg flex items-center justify-between ${block.color}`;
+          slot.innerHTML = `
+            <span>${i + 1}. ${block.text}</span>
+            <button onclick="removeBlockFromSlot(${i})" class="text-xs bg-black/30 hover:bg-black/50 p-1 rounded font-sans px-2">Remover ✕</button>
+          `;
+        } else {
+          slot.innerHTML = `<span class="text-slate-500 font-sans text-xs">Espaço #${i + 1}: Toque ou solte um bloco aqui</span>`;
+          slot.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            slot.classList.add('drag-over');
+          });
+          slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+          slot.addEventListener('drop', (e) => {
+            e.preventDefault();
+            slot.classList.remove('drag-over');
+            const id = e.dataTransfer.getData('text/plain') || draggedBlockId;
+            if (id && !scratchUserSequence.includes(id)) {
+              scratchUserSequence[i] = id;
+              renderScratchCanvas();
+              renderScratchToolbox();
+            }
+          });
+        }
+        canvas.appendChild(slot);
       }
     }
 
-    function rewardXP(amount) {
-      gold += amount;
-      updateGoldUI();
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+    function removeBlockFromSlot(index) {
+      scratchUserSequence[index] = null;
+      renderScratchCanvas();
+      renderScratchToolbox();
     }
 
-    // INITIALIZE EVERYTHING
+    function resetScratchPuzzle() {
+      scratchUserSequence = [null, null, null, null];
+      renderScratchCanvas();
+      renderScratchToolbox();
+      document.getElementById('scratchFeedback').textContent = '';
+    }
+
+    function verifyScratchPuzzle() {
+      const feedback = document.getElementById('scratchFeedback');
+      const expected = ['b1', 'b2', 'b3', 'b4'];
+      const isComplete = scratchUserSequence.every(x => x !== null);
+
+      if (!isComplete) {
+        feedback.className = 'text-xs font-bold text-amber-400';
+        feedback.textContent = '⚠️ Encaixe todos os 4 blocos na sequência antes de testar!';
+        return;
+      }
+
+      const isCorrect = scratchUserSequence.every((val, idx) => val === expected[idx]);
+      if (isCorrect) {
+        feedback.className = 'text-xs font-bold text-emerald-400';
+        feedback.textContent = '🌟 Brilhante! A lógica está impecável!';
+        if (!state.puzzleDone) {
+          state.puzzleDone = true;
+          rewardXP(20);
+        }
+        setTimeout(() => {
+          closePuzzleModal();
+          alert('🎉 Parabéns! Você concluiu o quebra-cabeça de blocos e recebeu suas 20 moedas!');
+        }, 1200);
+      } else {
+        feedback.className = 'text-xs font-bold text-ruby';
+        feedback.textContent = '❌ A ordem ainda não está certa. Lembre-se: primeiro defina os valores, depois faça a conta, e só então entregue o recibo!';
+      }
+    }
+
+    // INITIALIZE
     lucide.createIcons();
     renderNav();
-    renderScratchCanvas();
-    renderScratchToolbox();
-    updateGoldUI();
+    updateGamificationUI();
   </script>
 </body>
 </html>

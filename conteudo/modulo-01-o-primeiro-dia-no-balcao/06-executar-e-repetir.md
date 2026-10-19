@@ -31,17 +31,24 @@ Existem duas estruturas principais que você precisa dominar: o **"Enquanto"** e
 A estrutura **"Enquanto"** funciona com base em uma condição. Ela diz ao computador:  
 > *"Continue repetindo este bloco de instruções **ENQUANTO** esta condição continuar sendo verdadeira!"*
 
-Pense na fila da sua loja:
+Pense na fila da sua loja, com os comandos bem espaçados para você respirar e ler com calma:
 
 ```text
-clientes_na_fila = 10
+clientes na fila = 10
 
-ENQUANTO (clientes_na_fila > 0):
-    Dizer: "Próximo aventureiro, por favor!"
-    Atender o pedido e entregar o item.
-    clientes_na_fila = clientes_na_fila - 1   <-- Um cliente foi atendido e saiu da fila!
 
-Dizer: "Ufa! A fila acabou. Hora de fechar as portas e contar as moedas do dia."
+ENQUANTO (clientes na fila > 0):
+
+    DIZER: "Próximo aventureiro, por favor!"
+    
+    ATENDER: pedido do heroi
+    
+    ENTREGAR: item comprado
+    
+    clientes na fila = clientes na fila - 1
+
+
+DIZER: "Ufa! A fila acabou. Hora de fechar as portas e contar as moedas do dia."
 ```
 
 Veja como o Golem pensa passo a passo:
@@ -49,11 +56,11 @@ Veja como o Golem pensa passo a passo:
 2. Tem 9 clientes? 9 é maior que 0? **Sim!** Atende o segundo e diminui para 8.
 3. (...)
 4. Quando restar 1 cliente, ele atende, diminui para 0.
-5. O computador volta ao topo e pergunta: *0 é maior que 0?* **Não!** A condição virou `False`!
+5. O computador volta ao topo e pergunta: *0 é maior que 0?* **Não!** A condição virou Falsa!
 6. O Golem sai do laço e diz a frase final: a fila acabou!
 
 #### ⚠️ O Perigo do "Loop Infinito":
-E se você esquecesse de colocar a linha que diminui o cliente da fila (`clientes_na_fila = clientes_na_fila - 1`)?  
+E se você esquecesse de colocar a linha que diminui o cliente da fila (`clientes na fila = clientes na fila - 1`)?  
 A fila continuaria sempre com 10 para sempre, e o seu computador ficaria atendendo eternamente até travar ou esquentar o processador! Sempre garanta que em algum momento a sua condição se torne falsa para o programa poder descansar.
 
 ---
@@ -65,15 +72,21 @@ Enquanto o "Enquanto" depende de uma condição que pode mudar, a estrutura **"P
 Imagine que você acabou de receber uma caixa de madeira com **5 novas Poções de Mana**. Você precisa inspecionar cada uma delas para colar a etiqueta de preço:
 
 ```text
-caixa_de_pocoes = ["Poção Azul", "Poção Verde", "Poção Roxa", "Poção Vermelha", "Poção Dourada"]
+caixa de pocoes = ["Poção Azul", "Poção Verde", "Poção Roxa", "Poção Vermelha", "Poção Dourada"]
 
-PARA CADA pocao NA caixa_de_pocoes:
-    Pegar a pocao da caixa.
-    Limpar a poeira do frasco.
-    Colar a etiqueta de 25 moedas de ouro.
-    Colocar a pocao na prateleira.
 
-Dizer: "Todas as poções foram etiquetadas com sucesso!"
+PARA CADA pocao NA caixa de pocoes:
+
+    PEGAR: pocao da caixa
+    
+    LIMPAR: poeira do frasco
+    
+    COLAR ETIQUETA: "25 moedas de ouro"
+    
+    COLOCAR: pocao na prateleira
+
+
+DIZER: "Todas as poções foram etiquetadas com sucesso!"
 ```
 
 Veja que naturalidade: você não precisou criar contadores manuais. O comando **"Para cada..."** automaticamente pega o primeiro frasco, executa todas as ordens, depois passa para o segundo, para o terceiro, e quando a caixa fica vazia, ele encerra o trabalho sozinho!
@@ -85,10 +98,10 @@ Veja que naturalidade: você não precisou criar contadores manuais. O comando *
 Respire fundo e olhe para trás. Em apenas 6 lições descomplicadas, você aprendeu:
 1. O que é programar e quem foram as mulheres que criaram isso (Ada Lovelace e Grace Hopper);
 2. O que é pensamento algorítmico e passo a passo lógico;
-3. O que são variáveis e seus tipos (números, strings com aspas, booleanos);
+3. O que são variáveis e seus tipos (números, textos entre aspas, booleanos);
 4. Como fazer contas e comparações com operadores;
-5. Como tomar decisões no balcão com o "Se" (`if/elif/else`);
-6. Como automatizar filas e estoques com "Enquanto" e "Para" (`while` e `for`).
+5. Como tomar decisões no balcão com o "Se";
+6. Como automatizar filas e estoques com "Enquanto" e "Para".
 
 Você agora já pensa como um programador! 
 

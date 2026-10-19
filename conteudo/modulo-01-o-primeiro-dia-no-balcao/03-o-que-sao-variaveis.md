@@ -17,18 +17,18 @@ Pense em uma variável como uma **pequena caixinha mágica** (tipo a bolsa mági
 Imagine o balcão da sua loja de itens. Atrás de você, na parede, há centenas de pequenas gavetas de madeira.
 
 Para não se perder na correria do dia a dia, você pega uma caneta e escreve na etiqueta de uma gaveta:  
-🏷️ **`moedas_ouro`**
+🏷️ **`moedas de ouro`**
 
 Dentro dessa gaveta, você coloca o número `100`.
 
-Pronto! Toda vez que você precisar saber quanto dinheiro tem no caixa da loja, você não precisa contar tudo do zero: basta pedir para o seu ajudante olhar o que está guardado dentro da caixinha chamada `moedas_ouro`.
+Pronto! Toda vez que você precisar saber quanto dinheiro tem no caixa da loja, você não precisa contar tudo do zero: basta pedir para o seu ajudante olhar o que está guardado dentro da caixinha chamada `moedas de ouro`.
 
 E por que ela se chama **variável**?  
 Porque o valor que está lá dentro **pode variar** ao longo do tempo!
 * Se um guerreiro compra uma poção por 20 moedas, você abre a caixinha e troca o número de 100 para `120`.
 * Se você compra novos frascos de vidro por 10 moedas, o valor dentro da caixinha diminui para `110`.
 
-A etiqueta da caixa continua sendo a mesma (`moedas_ouro`), mas o conteúdo lá dentro muda conforme a vida da loja acontece.
+A etiqueta da caixa continua sendo a mesma (`moedas de ouro`), mas o conteúdo lá dentro muda conforme a vida da loja acontece.
 
 ---
 
@@ -61,12 +61,12 @@ Elas guardam nomes de clientes, descrições de poções, mensagens de aviso e d
 
 #### 3. Booleanos (Verdadeiro ou Falso)
 Os booleanos (`bool`) são o tipo mais simples e elegante que existe. Eles só conseguem guardar exatamente dois valores possíveis:
-* **`True` (Verdadeiro)**
-* **`False` (Falso)**
+* **`Verdadeiro` (True)**
+* **`Falso` (False)**
 
 Pense no booleano como a lanterna pendurada na porta da sua loja:
-* Se a lanterna está acesa (`True`), a loja está **aberta**.
-* Se a lanterna está apagada (`False`), a loja está **fechada**.
+* Se a lanterna está acesa (`Verdadeiro`), a loja está **aberta**.
+* Se a lanterna está apagada (`Falso`), a loja está **fechada**.
 
 Eles são usados para responder perguntas diretas: *O cliente tem ouro suficiente?* (Sim/Não). *A poção está vencida?* (Sim/Não).
 
@@ -74,19 +74,18 @@ Eles são usados para responder perguntas diretas: *O cliente tem ouro suficient
 
 ### E como a gente cria uma variável na prática?
 
-Na maioria das linguagens de programação, você precisa dizer o tipo, o nome e o valor.
-
-Mas no **Python**, as coisas são incrivelmente fáceis e amigáveis! O Python é uma linguagem de **tipagem dinâmica**. Isso significa que você não precisa perder tempo avisando ao computador *"olha, agora vou criar um número inteiro"*. 
-
-Você simplesmente escolhe o nome da etiqueta, coloca o sinal de igual `=` e o valor. O próprio Python é esperto o suficiente para olhar o valor e entender o tipo sozinho:
+Na lógica, você simplesmente escolhe o nome em português, coloca o sinal de igual `=` e o valor guardado:
 
 ```text
-nome_da_loja = "Empório Mágico da Aya"    <-- Texto (String)
-quantidade_pocoes = 15                   <-- Número Inteiro (int)
-preco_pocao = 12.50                      <-- Número Decimal (float)
-loja_aberta = True                       <-- Booleano (bool)
+nome da loja = "Empório Mágico da Aya"
+
+quantidade de pocoes = 15
+
+preco da pocao = 12.50
+
+loja aberta = Verdadeiro
 ```
 
-Viu como é limpo e natural?
+Espaçar bem os comandos e usar nomes claros em português facilita enormemente a sua leitura e evita que você se sinta confuso.
 
 Agora que nossas gavetas já estão etiquetadas e abastecidas de informações, na próxima lição vamos aprender como usar essas informações para fazer contas e comparações: **os Operadores Lógicos e Matemáticos**!
