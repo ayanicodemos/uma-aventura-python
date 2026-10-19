@@ -45,6 +45,13 @@
   </script>
   
   <style>
+    /* CRITICAL: Disable all font ligatures so code ALWAYS displays literal keyboard keys (>=, <=, !=) */
+    *, code, pre, kbd, samp {
+      font-variant-ligatures: none !important;
+      -webkit-font-variant-ligatures: none !important;
+      font-feature-settings: "calt" 0, "liga" 0, "dlig" 0 !important;
+    }
+
     /* Scratch-like block notch aesthetics */
     .scratch-block {
       position: relative;
@@ -154,7 +161,7 @@
         </div>
 
         <nav id="lessonsNav" class="space-y-1.5 text-xs font-medium">
-          <!-- Dynamically populated via JS for smooth pagination -->
+          <!-- Dynamically populated via JS -->
         </nav>
       </div>
 
@@ -164,7 +171,7 @@
           <span>💡</span> O Segredo da Aya
         </div>
         <p class="text-xs text-purple-200/90 leading-relaxed">
-          "Na lógica, não se preocupe com regras em inglês ou símbolos misteriosos. Pense em português claro e espaçado, como se estivesse anotando num bloco de notas do balcão!"
+          "Na lógica da loja, nunca se preocupe com regras em inglês ou jargões misteriosos. Pense em português claro e espaçado, como se estivesse anotando numa comanda do balcão!"
         </p>
       </div>
 
@@ -188,7 +195,7 @@
         <!-- Breadcrumb & Top Navigation Buttons -->
         <div class="flex items-center justify-between border-b border-rpg-border pb-4 mb-6">
           <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold">
-            <span>Módulo 01: Lógica Pura</span> • <span id="currentLessonIndex">Lição 1 de 6</span>
+            <span>Módulo 01: O Balcão Mágico</span> • <span id="currentLessonIndex">Lição 1 de 6</span>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="prevLesson()" id="btnPrevLesson" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-medium flex items-center gap-1 border border-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition">
@@ -210,7 +217,7 @@
           <div class="flex items-center justify-between">
             <div>
               <h4 class="font-fantasy font-bold text-base text-amber-400 flex items-center gap-2">
-                <span>⚔️</span> Arena de Provações do Módulo 1
+                <span>⚔️</span> Arena de Provações do Balcão
               </h4>
               <p class="text-xs text-slate-400 mt-0.5">
                 Conclua a leitura e enfrente os desafios dedicados para consolidar sua lógica!
@@ -382,96 +389,97 @@
 
   <!-- SCRIPT ENGINE -->
   <script>
-    // 1. MODULE 1 LESSONS (100% PORTUGUESE LOGIC, PROPER SPACING, ZERO UNDERSCORES)
+    // 1. MODULE 1 LESSONS (100% ADAPTED TO SHOP LORE, LITERAL PYTHON OPERATORS, PROPER SPACING)
     const lessons = [
       {
         id: 1,
-        title: "1.1 O que é Programação?",
-        subtitle: "História, máquinas mecânicas, Ada Lovelace e Grace Hopper",
+        title: "1.1 Como a Magia Nasceu",
+        subtitle: "A história do reino: máquinas antigas, Ada Lovelace e Grace Hopper",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.1: O que é Programação?</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.1: Como Nasceu a Magia da Programação</h2>
           <p class="text-base text-slate-200">
-            Com certeza você já ouviu falar em programadores, computadores e códigos. Mas será que você realmente compreende o que é uma <strong>linguagem de programação</strong>?
+            Puxe um banquinho, coloque o seu avental e sirva-se de uma caneca de chá quentinho. Seja muito bem-vindo ao <strong>Empório de Poções e Artefatos da Aya</strong>!
           </p>
           <p>
-            Para entender como viemos parar aqui — com você se preparando para gerenciar sua própria loja de itens e poções com a ajuda de um Golem digital —, nós precisamos voltar um pouquinho no tempo e ter uma rápida aula de história.
+            A partir de hoje, você é o mais novo aprendiz deste balcão. Mas administrar uma loja em um reino de fantasia é agitado: a qualquer momento entra um bárbaro querendo poções de fúria, uma elfa exigindo flechas mágicas e um mago sem moedas.
+          </p>
+          <p>
+            Fazer todas as contas de cabeça e conferir estoques no olho faria seu cérebro derreter antes do almoço! É por isso que contamos com a ajuda de um <strong>Golem Ajudante de Pedra e Engrenagens</strong> (o nosso <strong>Computador</strong>).
           </p>
           <div class="bg-slate-900/90 border-l-4 border-amber-500 p-5 rounded-r-2xl my-4 text-sm space-y-3">
-            <h4 class="font-bold text-amber-300 text-base">📜 As Pioneiras da Nossa História:</h4>
-            <p><strong>Ada Lovelace (Século XIX):</strong> Junto de Charles Babbage, percebeu que em vez de forjar uma máquina mecânica para cada cálculo matemático, podiam criar uma máquina geral que funcionasse através de um algoritmo programável. <em>Ela escreveu o primeiro programa da história humana!</em></p>
-            <p><strong>Grace Hopper (1952):</strong> Almirante da Marinha dos EUA que se recusou a aceitar que humanos precisassem programar em linguagem binária pura. Ela inventou o primeiro <strong>Compilador</strong>, provando que máquinas podiam traduzir termos compreensíveis em inglês para circuitos elétricos.</p>
+            <h4 class="font-bold text-amber-300 text-base">📜 Os Grandes Mestres que Criaram Essa Arte:</h4>
+            <p><strong>Lady Ada Lovelace (Século XIX):</strong> Percebeu que em vez de forjar uma engenhoca de latão para cada tarefa, podiam criar um autômato geral que seguisse instruções em pergaminhos lógicos. <em>Ela escreveu o primeiro programa da história!</em></p>
+            <p><strong>Grace Hopper (1952):</strong> Almirante e alquimista que se recusou a aceitar que humanos precisassem dar ordens em códigos binários indecifráveis (<code>0100101</code>). Ela inventou o primeiro <strong>Compilador</strong>, permitindo dar ordens usando palavras compreensíveis!</p>
           </div>
           <p>
-            Uma <strong>linguagem de programação</strong> é simplesmente a forma que usamos para conversar com o computador e pedir que ele realize tarefas específicas. É como escrever uma <strong>receita de bolo de cenoura extremamente detalhada</strong> para um ajudante na cozinha da loja: você precisa dizer cada ingrediente e cada passo na ordem exata.
-          </p>
-          <p>
-            E o <strong>Python</strong>? O Python é uma linguagem de altíssimo nível, moderna e <em>interpretada</em>. Ela lê o seu código linha por linha em tempo real, sem você ter que gerar arquivos <code>.EXE</code> complicados, tornando o aprendizado muito mais leve e divertido!
+            Dar ordens ao Golem é como escrever uma <strong>receita de alquimia passo a passo</strong>: ele tem força infinita e velocidade inumana, mas zero intuição. E o <strong>Python</strong> é a linguagem mais elegante do reino: ela é interpretada linha por linha em tempo real, tornando tudo ágil e gostoso de aprender!
           </p>
         `
       },
       {
         id: 2,
-        title: "1.2 O que é Lógica?",
-        subtitle: "Pensamento algorítmico, a metáfora das moedas e o pão",
+        title: "1.2 A Lógica do Balcão",
+        subtitle: "A arte do atendimento, moedas no bolso e algoritmos infalíveis",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.2: O que é Lógica de Programação?</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.2: A Lógica de Atendimento no Balcão</h2>
           <p class="text-base text-slate-200">
-            Não se assuste com o nome pomposo! Muita gente acha que "lógica" é uma matéria assustadora cheia de fórmulas matemáticas alienígenas. Na verdade, você já usa lógica todos os dias da sua vida.
+            A <strong>Lógica de Programação</strong> não é um feitiço proibido cheio de fórmulas assustadoras. Ela é simplesmente a arte de organizar seus passos em uma ordem perfeita para resolver uma situação da loja.
           </p>
           <div class="bg-slate-900/90 border-l-4 border-blue-500 p-5 rounded-r-2xl my-4 text-sm space-y-2">
-            <h4 class="font-bold text-blue-300 text-base">🥖 O Exemplo do Pão na Padaria do Reino:</h4>
-            <p>Digamos que você tenha <strong>5 moedas de ouro</strong> no bolso e queira comprar um pão que custa <strong>2 moedas</strong>.</p>
-            <ol class="list-decimal list-inside space-y-1.5 text-slate-300 mt-2">
-              <li>Você confere o preço: 2 moedas.</li>
-              <li>Você olha o bolso: tem 5 moedas.</li>
-              <li>Comparação mental: 5 é maior ou igual a 2? (Sim!).</li>
-              <li>Entrega 5 moedas ao padeiro.</li>
+            <h4 class="font-bold text-blue-300 text-base">🥖 O Guerreiro e o Frasco de Óleo:</h4>
+            <p>Um guerreiro chega com <strong>5 moedas de ouro</strong> querendo comprar um óleo de tocha que custa <strong>2 moedas</strong>.</p>
+            <ol class="list-decimal list-inside space-y-1.5 text-slate-300 mt-2 font-sans">
+              <li>Você confere o preço do óleo: <code>2 moedas</code>.</li>
+              <li>Você olha a mão do guerreiro: ele tem <code>5 moedas</code>.</li>
+              <li>Comparação lógica: 5 é maior ou igual a 2? (Sim, com certeza!).</li>
+              <li>Você recebe as 5 moedas e guarda no caixa.</li>
               <li>Cálculo do troco: <code>5 - 2 = 3 moedas</code>.</li>
-              <li>Recebe o pão e as 3 moedas de volta.</li>
+              <li>Entrega o frasco e as 3 moedas de troco.</li>
             </ol>
           </div>
           <p>
-            Se você tentar comer o pão antes de ir à padaria, não dá. Se pedir o troco antes de pagar, o padeiro vai rir de você! A <strong>ordem exata</strong> importa. Essa receita ordenada de passos se chama <strong>Algoritmo</strong>.
+            Se você entregar o troco antes de pegar o ouro, o cliente pode fugir! A <strong>ordem exata</strong> importa. Essa receita ordenada de passos se chama <strong>Algoritmo</strong>.
           </p>
           <p>
-            O computador não tem bom senso nem intuição: se você não der a ordem no momento certo, ele não adivinha. Programar é apenas desenhar essa sequência sem brechas!
+            O nosso Golem é 100% literal: ele não adivinha nada. Por isso, ser um bom programador é aprender a dar passos claros e sem furos!
           </p>
         `
       },
       {
         id: 3,
-        title: "1.3 As Caixas (Variáveis)",
-        subtitle: "A bolsa da Hermione, gavetas com etiquetas e tipos de dados",
+        title: "1.3 As Gavetas (Variáveis)",
+        subtitle: "A bolsa da Hermione, etiquetas em português e tipos de dados",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.3: As Caixinhas Mágicas (Variáveis)</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.3: As Gavetas do Balcão (Variáveis)</h2>
           <p class="text-base text-slate-200">
-            A variável é como uma <strong>caixinha mágica com uma etiqueta colada na frente</strong> (tipo a bolsa da Hermione onde cabe de tudo).
+            Atrás do nosso balcão, a parede tem centenas de gavetinhas com puxadores de latão. Uma <strong>Variável</strong> nada mais é do que uma gaveta mágica com uma etiqueta de identificação colada na frente!
           </p>
           <p>
-            Atrás do balcão da sua loja, você tem gavetas com etiquetas claras em português, sem necessidade de underlines:
+            Na lógica da loja, organizamos as gavetas com nomes em português, sem underlines e bem espaçadas:
           </p>
-          <div class="bg-slate-900/90 border border-slate-700 p-5 rounded-2xl my-4 font-mono text-xs space-y-3 leading-relaxed">
-            <p><span class="text-amber-400 font-bold">nome da loja</span> = "Empório Mágico da Aya"</p>
-            <p><span class="text-blue-400 font-bold">quantidade de pocoes</span> = 15</p>
+          <div class="bg-slate-900/90 border border-slate-700 p-5 rounded-2xl my-4 font-mono text-xs space-y-4 leading-relaxed">
+            <p><span class="text-amber-400 font-bold">nome da loja</span> = "Empório de Poções da Aya"</p>
+            <p><span class="text-blue-400 font-bold">quantidade de frascos</span> = 15</p>
             <p><span class="text-emerald-400 font-bold">preco da pocao</span> = 12.50</p>
             <p><span class="text-purple-400 font-bold">loja aberta</span> = Verdadeiro</p>
           </div>
           <p>
-            <strong>A Regra Sagrada das Aspas:</strong> Palavras e textos sempre vêm entre aspas (<code>"Abacate"</code>), para avisar ao computador que aquilo é uma frase humana e não uma conta matemática.
-          </p>
-          <p>
-            <strong>Aviso de Ponto vs Vírgula:</strong> No computador, decimais usam ponto: escreva <code>12.50</code> e nunca <code>12,50</code>!
+            <strong>Tipos de Dados da Loja:</strong>
+            <br>• <strong>Inteiros (int):</strong> Moedas inteiras ou frascos fechados (<code>15</code>, <code>50</code>, <code>100</code>).
+            <br>• <strong>Decimais (float):</strong> Preços quebrados, sempre com ponto inglês (<code>12.50</code> e nunca vírgula!).
+            <br>• <strong>Textos (Strings):</strong> Nomes e diálogos, sempre protegidos entre aspas (<code>"Poção de Cura"</code>).
+            <br>• <strong>Booleanos (bool):</strong> Como a lanterna da porta: <code>Verdadeiro</code> (Aberta) ou <code>Falso</code> (Fechada).
           </p>
         `
       },
       {
         id: 4,
         title: "1.4 Operadores do Python",
-        subtitle: "Contas, o sinal de igual (= vs ==) e comparações",
+        subtitle: "Contas da loja (+, -, *, /), o duelo do = e as comparações (==, !=, >, <, >=, <=)",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.4: Operadores Matemáticos e Lógicos</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.4: Operadores Matemáticos e Lógicos do Python</h2>
           <p class="text-base text-slate-200">
-            No Python, usamos exatamente os seguintes símbolos para fazer contas e comparações:
+            Para somar faturamentos e comparar preços no balcão, o Python usa exatamente as seguintes teclas do teclado comum:
           </p>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 font-mono text-xs">
             <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>+</code> (Adição)</div>
@@ -479,33 +487,41 @@
             <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>*</code> (Multiplicação)</div>
             <div class="p-3 rounded-xl bg-slate-900 border border-slate-700"><code>/</code> (Divisão)</div>
           </div>
-          <div class="bg-slate-900/90 border-l-4 border-ruby p-5 rounded-r-2xl my-4 text-sm space-y-2">
+          <div class="bg-slate-900/90 border-l-4 border-ruby p-5 rounded-r-2xl my-4 text-sm space-y-3">
             <h4 class="font-bold text-ruby text-base">⚔️ O Duelo: '=' (Guardar) vs. '==' (Comparar)</h4>
-            <p><strong>Um sinal de igual (=):</strong> Atribuição. Guarda o valor na gaveta. <em>Exemplo:</em> <code>preco da pocao = 15</code>.</p>
-            <p><strong>Dois sinais de igual (==):</strong> Comparação. Pergunta se são idênticos. <em>Exemplo:</em> <code>senha digitada == "abracadabra"</code>.</p>
+            <p><strong>Um sinal de igual solitário (=):</strong> Atribuição. Guarda o valor na gaveta.  
+            <br><code class="text-xs">preco da pocao = 15</code></p>
+            <p><strong>Dois sinais de igual juntos (==):</strong> Pergunta se são idênticos!  
+            <br><code class="text-xs">senha digitada == "abracadabra"</code></p>
           </div>
-          <p>
-            Para comparar grandezas no balcão:
-            <br>• <code>></code> (Maior que) e <code><</code> (Menor que)
-            <br>• <code>>=</code> (Maior ou igual) e <code><=</code> (Menor ou igual)
-            <br>• <code>!=</code> (Diferente de: o ponto de exclamação grita 'NÃO é igual!')
-            <br>• <code>and</code> (E) e <code>or</code> (OU) e <code>not</code> (NÃO).
+          <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-700 space-y-2 text-xs font-mono">
+            <p class="font-bold text-amber-300 font-sans text-sm mb-2">Comparações com Teclas Literais do Teclado:</p>
+            <p><code class="text-amber-400 font-bold">&gt;</code> : Maior que &nbsp;|&nbsp; <code class="text-amber-400 font-bold">&lt;</code> : Menor que</p>
+            <p><code class="text-amber-400 font-bold">&gt;=</code> : Maior ou igual &nbsp;(digita-se o maior &gt; seguido do igual =)</p>
+            <p><code class="text-amber-400 font-bold">&lt;=</code> : Menor ou igual &nbsp;(digita-se o menor &lt; seguido do igual =)</p>
+            <p><code class="text-amber-400 font-bold">!=</code> : Diferente de &nbsp;(ponto de exclamação ! seguido do igual =)</p>
+            <p class="text-slate-400 font-sans text-[11px] pt-1">
+              <em>Nunca usamos símbolos desenhados de livros escolares como ⩾ ou ≠, porque essas teclas não existem no teclado!</em>
+            </p>
+          </div>
+          <p class="text-sm">
+            E para regras compostas da guilda: <code>and</code> (E: exige tudo verdadeiro), <code>or</code> (OU: basta uma verdadeira) e <code>not</code> (NÃO: inverte o valor).
           </p>
         `
       },
       {
         id: 5,
         title: "1.5 O Famoso 'Se'",
-        subtitle: "Tomando decisões no balcão: Se tem moedas, vende; Senão...",
+        subtitle: "Tomando decisões no balcão: Se tem ouro vende, senão..., e a indentação",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.5: O Famoso 'Se' (Condicionais)</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.5: As Regras do Balcão (O Famoso 'Se')</h2>
           <p class="text-base text-slate-200">
-            A vida da loja exige decisões! Você não entrega uma espada para quem não tem dinheiro no bolso.
+            Você não pode entregar uma espada mágica para quem não tem ouro no bolso. É hora de ensinar o Golem a tomar decisões!
           </p>
           <div class="bg-slate-900/90 border-l-4 border-amber-500 p-5 rounded-r-2xl my-4 text-xs font-mono space-y-3 leading-relaxed">
             <p class="text-slate-400">preco da espada = 50</p>
             <p class="text-slate-400">ouro do guerreiro = 60</p>
-            <p class="text-amber-300 font-bold pt-2">SE (ouro do guerreiro >= preco da espada):</p>
+            <p class="text-amber-300 font-bold pt-2">SE (ouro do guerreiro &gt;= preco da espada):</p>
             <p class="pl-6 text-slate-200">troco = ouro do guerreiro - preco da espada</p>
             <p class="pl-6 text-slate-200">DIZER: "Parabéns pela compra! Seu troco é de " + troco</p>
             <p class="pl-6 text-slate-200">ENTREGAR: Espada de Aço</p>
@@ -513,39 +529,39 @@
             <p class="pl-6 text-slate-200">DIZER: "Volte ao calabouço para juntar mais ouro!"</p>
           </div>
           <p>
-            O computador analisa a pergunta. Se a resposta for <code>Verdadeiro</code>, executa o primeiro bloco. Se for <code>Falso</code>, pula direto para o <strong>SENÃO</strong>!
+            Se a condição for <code>Verdadeira</code>, o Golem vende e dá o troco. Se for <code>Falsa</code>, ele pula direto para o <strong>SENÃO</strong> e protege o estoque da loja!
           </p>
           <p>
-            <strong>A Indentação:</strong> O espacinho empurrado para a direita mostra quais comandos estão guardados dentro daquela decisão!
+            <strong>A Indentação:</strong> O espacinho empurrado para a direita mostra quais ordens estão guardadas dentro daquela gaveta de decisão!
           </p>
         `
       },
       {
         id: 6,
-        title: "1.6 Executar e Repetir",
-        subtitle: "Laços 'Enquanto' e 'Para' para atender filas e estoques",
+        title: "1.6 Fila e Estoque (Loops)",
+        subtitle: "Automatizando a loja com 'Enquanto' e 'Para cada', e o loop infinito",
         html: `
-          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.6: Executar e Repetir (Laços de Repetição)</h2>
+          <h2 class="text-2xl font-fantasy font-bold text-amber-400 mb-2">Lição 1.6: Dias de Feira Movimentada (Repetições)</h2>
           <p class="text-base text-slate-200">
-            A sua loja fez tanto sucesso que há uma fila de 100 heróis na porta! Você não vai copiar e colar o mesmo código 100 vezes.
+            A guilda inteira voltou da masmorra e há 100 aventureiros na porta da loja! Em vez de copiar e colar o código 100 vezes, usamos os <strong>Laços de Repetição</strong>.
           </p>
           <div class="bg-slate-900/90 border-l-4 border-emerald-500 p-5 rounded-r-2xl my-4 text-xs font-mono space-y-3 leading-relaxed">
             <p class="text-slate-400">clientes na fila = 10</p>
-            <p class="text-emerald-300 font-bold pt-2">ENQUANTO (clientes na fila > 0):</p>
+            <p class="text-emerald-300 font-bold pt-2">ENQUANTO (clientes na fila &gt; 0):</p>
             <p class="pl-6 text-slate-200">DIZER: "Próximo aventureiro, por favor!"</p>
             <p class="pl-6 text-slate-200">ATENDER: pedido do heroi</p>
             <p class="pl-6 text-slate-200">ENTREGAR: item comprado</p>
             <p class="pl-6 text-slate-200">clientes na fila = clientes na fila - 1</p>
-            <p class="text-slate-400 pt-2">// O laço roda 10 vezes até a fila zerar sozinho!</p>
+            <p class="text-slate-400 pt-2">// O laço atende os 10 clientes e fecha sozinho quando zerar!</p>
           </div>
           <p>
-            <strong>ENQUANTO:</strong> Repete enquanto uma condição for verdadeira.
+            <strong>ENQUANTO:</strong> Repete enquanto a condição continuar verdadeira (lembre-se sempre de diminuir a fila para não criar um <em>loop infinito</em>!).
           </p>
           <p>
-            <strong>PARA CADA:</strong> Repete para cada item de uma caixa ou lista (ex: para cada frasco de poção, cole a etiqueta).
+            <strong>PARA CADA:</strong> Repete para cada item de uma caixa (ex: <code>PARA CADA pocao NA caixa de pocoes</code>).
           </p>
           <div class="bg-amber-500/10 border border-amber-500/40 p-4 rounded-2xl text-amber-300 font-bold text-sm my-4 text-center">
-            🎉 Parabéns! Você concluiu a Lógica Fundamental da Loja! Você já pensa como um programador e está pronto para os desafios abaixo!
+            🎉 Parabéns! Você dominou toda a Lógica Fundamental da Loja! Prove sua maestria na Arena de Provações abaixo!
           </div>
         `
       }

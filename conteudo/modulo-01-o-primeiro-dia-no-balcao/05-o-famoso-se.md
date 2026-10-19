@@ -1,44 +1,45 @@
-# O Famoso "Se": Tomando Decisões no Balcão
+# As Regras do Balcão: Tomando Decisões com o Famoso "Se"
 > **Uma Aventura Python** — Por Aya Nicodemos (Ayasoft Studios)  
 > *Módulo 1: O Primeiro Dia no Balcão — Lição 5*
 
 ---
 
-Chegamos a uma das estruturas mais fantásticas e poderosas de toda a computação: a estrutura condicional, carinhosamente conhecida como **o famoso "Se"**.
+Chegamos a uma das ferramentas mais fascinantes do comércio mágico: a tomada de decisões, conhecida carinhosamente em toda a computação como **o famoso "Se"**.
 
-Até agora, nossas receitas de instruções eram executadas sempre em linha reta, do começo ao fim. Mas a vida real não é uma linha reta, não é verdade? 
+Até agora, as ordens que passamos para o nosso Golem seguiam sempre em linha reta, do começo ao fim. Mas a vida de um empório movimentado não é uma linha reta!
 
-A cada minuto, você precisa fazer escolhas com base no que está acontecendo:
-* *Se estiver chovendo lá fora, eu levo um guarda-chuva.*
-* *Se o semáforo estiver vermelho, eu paro o carro.*
-* *Se eu tiver sono, vou dormir.*
-
-Na sua loja de itens para aventureiros, é a mesma coisa. Você não pode entregar uma espada mágica para todo mundo que estende a mão; você precisa conferir primeiro se o cliente tem moedas de ouro suficientes no bolso!
+A cada minuto, você precisa fazer escolhas com base no que o aventureiro traz até o balcão:
+* *Se o guerreiro tiver ouro suficiente, entregue a espada mágica.*
+* *Senão, avise para ele voltar à masmorra para juntar mais moedas!*
 
 ---
 
 ### Como funciona a estrutura "Se"?
 
-A estrutura condicional funciona exatamente como se você estivesse fazendo uma pergunta de sim ou não para o computador:
+A estrutura condicional funciona exatamente como se você estivesse fazendo uma pergunta de Sim ou Não para o Golem:
 
 ```text
-SE (esta condição for verdadeira):
+SE (esta condição for Verdadeira):
+
     Execute estas ordens aqui dentro!
 
+
 SENÃO:
-    Execute este outro plano alternativo!
+
+    Execute este plano alternativo!
 ```
 
-Vamos ver como isso se aplica no balcão da sua loja:
+Vamos ver um caso real no balcão da nossa loja:
 
-> Um guerreiro entra e quer comprar uma **Espada de Aço** que custa **50 moedas de ouro**.
+> Um guerreiro entra com pressa querendo comprar uma **Espada de Aço** que custa **50 moedas de ouro**.
 
-Veja como o seu Golem ajudante deve pensar, com bastante clareza e espaço entre os passos:
+Veja como o seu Golem ajudante deve analisar a situação, com espaço generoso entre os comandos para você ler com calma:
 
 ```text
 preco da espada = 50
 
 ouro do guerreiro = 60
+
 
 
 SE (ouro do guerreiro >= preco da espada):
@@ -50,48 +51,50 @@ SE (ouro do guerreiro >= preco da espada):
     ENTREGAR: Espada de Aço
 
 
+
 SENÃO:
 
-    DIZER: "Sinto muito! Você precisa de 50 moedas para levar esta espada. Volte ao calabouço para juntar mais ouro!"
+    DIZER: "Sinto muito, meu nobre! Você precisa de 50 moedas. Volte ao calabouço para juntar mais ouro!"
 ```
 
-Veja que incrível:
-* Se o guerreiro tiver `60 moedas`, a condição `60 >= 50` é **Verdadeira**. O Golem executa o primeiro bloco: calcula o troco, entrega a espada e comemora a venda!
-* Se o guerreiro tiver apenas `30 moedas`, a condição `30 >= 50` é **Falsa**. O Golem pula o primeiro bloco sem entregar a espada e executa o bloco do **SENÃO**, avisando educadamente que faltam moedas.
+Veja como é elegante e intuitivo:
+* Se o guerreiro tiver `60 moedas`, a pergunta `60 >= 50` é **Verdadeira**. O Golem entra no primeiro bloco: calcula o troco de 10 moedas, entrega a espada e festeja a venda!
+* Se o guerreiro tiver apenas `35 moedas`, a pergunta `35 >= 50` é **Falsa**. O Golem não entrega a espada de jeito nenhum! Ele pula direto para o bloco do **SENÃO**, avisando educadamente que faltam moedas.
 
-O seu programa agora tem cérebro próprio: ele analisa a situação e toma o caminho correto!
+O seu comércio agora tem inteligência própria: ele avalia a carteira do cliente e protege o seu estoque!
 
 ---
 
-### E quando existem várias opções? (O "Senão Se")
+### E quando temos opções variadas? (O "Senão Se")
 
-Nem tudo na vida é apenas duas opções simples de sim ou não. Às vezes, temos uma tabela inteira de possibilidades.
-
-Imagine que você queira dar descontos especiais na sua loja dependendo da classe do herói:
+Nem tudo na loja é preto no branco. Às vezes, você quer aplicar a política de descontos da guilda dependendo de quem está no balcão:
 * Se for um **Mago**, dê 20% de desconto em poções de mana.
-* Senão, se for um **Clérigo**, dê 15% de desconto em poções de cura.
-* Senão, se for um **Bárbaro**, dê uma tocha de brinde.
+* Senão, se for um **Clérigo**, dê 15% de desconto em elixires de cura.
+* Senão, se for um **Bárbaro**, dê uma tocha grátis de brinde.
 * Senão (qualquer outra classe), cobre o preço normal de tabela.
 
-Na programação, essa cadeia de decisões intermediárias é chamada de **"Senão Se"**:
+Na programação, essa sequência de opções intermediárias se chama **"Senão Se"**:
 
 ```text
 SE (classe do heroi == "Mago"):
 
     desconto = 0.20
-    DIZER: "Desconto arcano aplicado!"
+    DIZER: "Desconto arcano de 20% aplicado!"
+
 
 
 SENÃO SE (classe do heroi == "Clérigo"):
 
     desconto = 0.15
-    DIZER: "Bênção divina concedida com desconto!"
+    DIZER: "Bênção da catedral com 15% de desconto!"
+
 
 
 SENÃO SE (classe do heroi == "Bárbaro"):
 
     desconto = 0.0
-    DIZER: "Tome uma tocha grátis para iluminar sua caverna!"
+    DIZER: "Tome uma tocha de brinde para iluminar sua caverna!"
+
 
 
 SENÃO:
@@ -100,18 +103,18 @@ SENÃO:
     DIZER: "Preço padrão de tabela aplicado."
 ```
 
-O computador lê essa lista de cima para baixo. Assim que ele encontra a primeira opção verdadeira, ele executa aquele bloco específico e ignora todo o resto!
+O Golem lê essa lista de cima para baixo. No primeiro teste que for Verdadeiro, ele aplica a ordem e ignora todo o restante da fila de condições!
 
 ---
 
-### Um Detalhe Visual Importantíssimo: A Indentação (O Recuo)
+### O Segredo da Indentação (O Recuo das Gavetas)
 
-Você reparou que nos exemplos acima, as ordens que devem acontecer dentro do `SE` estão um pouquinho "empurradas" para a direita, com um espacinho antes do texto?
+Repare com atenção que as instruções que devem acontecer dentro do `SE` estão um pouquinho "empurradas" para a direita com alguns espaços de margem.
 
-Esse recuo na margem se chama **Indentação**.
+Esse recuo visual se chama **Indentação**.
 
-Pense na indentação como uma gaveta aberta: tudo o que estiver dentro daquele espacinho para a direita só vai acontecer se aquela porta específica for aberta!
+Pense na indentação como uma gaveta que foi aberta: tudo o que estiver dentro daquele recuo para a direita só vai acontecer se aquela gaveta específica for aberta!
 
-O Python é uma das linguagens mais elegantes do planeta exatamente porque ele exige que esse código fique sempre organizado e alinhado visualmente.
+O Python é famoso no mundo inteiro exatamente por isso: ele não usa chaves ou pontuações confusas para delimitar blocos; ele usa a beleza da organização visual!
 
-Agora o seu Golem já sabe pensar e escolher. Mas o que acontece quando chega uma fila gigantesca de 50 heróis na porta da loja? Na próxima lição, vamos aprender a automatizar o trabalho pesado com as **Estruturas de Repetição ("Enquanto" e "Para")**!
+Agora o seu Golem já sabe pensar e escolher. Mas o que fazer quando há uma fila imensa de heróis na porta? Na Lição 1.6, vamos aprender a automatizar o trabalho com **"Enquanto" e "Para"**!
